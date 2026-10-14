@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowUpRight, Check, Sparkles, Calendar } from 'lucide-react';
 import { SERVICES, ServiceItem } from '../data/studioData';
+import { getImageUrl } from '../utils/assetImages';
 
 interface ServicesSectionProps {
   onSelectService: (serviceName: string) => void;
@@ -11,15 +12,15 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
 
   // Background thumbnails mapped to services (no camera pictures, purely authentic wedding & cinematic visuals)
   const serviceImages: Record<string, string> = {
-    'wedding-photography': '/src/assets/images/hero_cinematic_couple_1791896401138.jpg',
-    'wedding-films': '/src/assets/images/cinematic_film_still_1791896403634.jpg',
-    'pre-wedding-photography': '/src/assets/images/prewedding_cinematic_1791896401895.jpg',
-    'pre-wedding-films': '/src/assets/images/prewedding_cinematic_1791896401895.jpg',
-    'cinematic-videography': '/src/assets/images/cinematic_film_still_1791896403634.jpg',
-    'event-photography': '/src/assets/images/sangeet_celebration_lights_1791898991004.jpg',
-    'event-videography': '/src/assets/images/sangeet_celebration_lights_1791898991004.jpg',
-    'couple-portraits': '/src/assets/images/royal_bridal_portrait_1791898990033.jpg',
-    'commercial-events': '/src/assets/images/wedding_story_varmala_1791896401614.jpg',
+    'wedding-photography': getImageUrl('hero_cinematic_couple_1791896401138.jpg'),
+    'wedding-films': getImageUrl('cinematic_film_still_1791896403634.jpg'),
+    'pre-wedding-photography': getImageUrl('prewedding_cinematic_1791896401895.jpg'),
+    'pre-wedding-films': getImageUrl('prewedding_cinematic_1791896401895.jpg'),
+    'cinematic-videography': getImageUrl('cinematic_film_still_1791896403634.jpg'),
+    'event-photography': getImageUrl('sangeet_celebration_lights_1791898991004.jpg'),
+    'event-videography': getImageUrl('sangeet_celebration_lights_1791898991004.jpg'),
+    'couple-portraits': getImageUrl('royal_bridal_portrait_1791898990033.jpg'),
+    'commercial-events': getImageUrl('wedding_story_varmala_1791896401614.jpg'),
   };
 
   return (

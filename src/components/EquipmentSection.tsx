@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Camera, Disc, Zap, Sun, Monitor, Mic, Layers, Send, ShieldCheck, Sparkles, CheckCircle2, ChevronRight, Sliders, ExternalLink } from 'lucide-react';
 import { EQUIPMENT_BENCHMARKS, BRAND_CAMERAS, EquipmentItem } from '../data/studioData';
+import { handleImageFallback } from '../utils/assetImages';
 
 export const EquipmentSection: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
@@ -110,6 +111,7 @@ export const EquipmentSection: React.FC = () => {
                   src={selectedItem.image}
                   alt={selectedItem.name}
                   referrerPolicy="no-referrer"
+                  onError={handleImageFallback}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-70" />
@@ -179,6 +181,7 @@ export const EquipmentSection: React.FC = () => {
                         src={item.image}
                         alt={item.name}
                         referrerPolicy="no-referrer"
+                        onError={handleImageFallback}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80" />

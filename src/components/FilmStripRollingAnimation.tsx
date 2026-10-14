@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Play, Pause, RotateCcw, ChevronLeft, ChevronRight, Film, Sparkles, Disc } from 'lucide-react';
 import { useMotion } from '../context/MotionContext';
+import { getImageUrl, handleImageFallback } from '../utils/assetImages';
 
 interface FilmStripRollingAnimationProps {
   onOpenCinemaPreview: () => void;
@@ -33,7 +34,7 @@ export const FilmStripRollingAnimation: React.FC<FilmStripRollingAnimationProps>
       title: 'Manual 35mm SLR & Darkroom',
       camera: 'Mechanical 35mm Shutter · Prime Glass',
       detail: 'Etawah Road Studio Origin · Silver Halide Chemistry',
-      image: '/src/assets/images/hero_cinematic_couple_1791896401138.jpg',
+      image: getImageUrl('hero_cinematic_couple_1791896401138.jpg'),
       accent: '#ffb703',
       expNumber: 'EXP-1981',
     },
@@ -44,7 +45,7 @@ export const FilmStripRollingAnimation: React.FC<FilmStripRollingAnimationProps>
       title: 'Medium Format Wedding Vows',
       camera: '120mm Color Negative · Halogen Lighting',
       detail: 'Sacred Mandaps & Processions Across Uttar Pradesh',
-      image: '/src/assets/images/wedding_story_varmala_1791896401614.jpg',
+      image: getImageUrl('wedding_story_varmala_1791896401614.jpg'),
       accent: '#ff6b00',
       expNumber: 'EXP-1990',
     },
@@ -55,7 +56,7 @@ export const FilmStripRollingAnimation: React.FC<FilmStripRollingAnimationProps>
       title: 'Full-Frame Digital Sensors',
       camera: 'Canon EOS L-Series & High-Speed Primes',
       detail: 'Pioneering Candid Photojournalism & Softboxes',
-      image: '/src/assets/images/royal_bridal_portrait_1791898990033.jpg',
+      image: getImageUrl('royal_bridal_portrait_1791898990033.jpg'),
       accent: '#00e5ff',
       expNumber: 'EXP-2010',
     },
@@ -66,7 +67,7 @@ export const FilmStripRollingAnimation: React.FC<FilmStripRollingAnimationProps>
       title: 'Master Cinema & Drone Fleet',
       camera: 'Sony FX3 · Canon Cine · Fujifilm GFX · DJI Drones',
       detail: '4K 120fps 10-Bit Log · 2.39:1 Anamorphic Color Science',
-      image: '/src/assets/images/sony_a7s_cine_rig_1791960673477.jpg',
+      image: getImageUrl('sony_a7s_cine_rig_1791960673477.jpg'),
       accent: '#38bdf8',
       expNumber: 'EXP-2026',
     },
@@ -189,6 +190,7 @@ export const FilmStripRollingAnimation: React.FC<FilmStripRollingAnimationProps>
                     src={frame.image}
                     alt={`${frame.year} - ${frame.title}`}
                     referrerPolicy="no-referrer"
+                    onError={handleImageFallback}
                     className="w-full h-full object-cover"
                   />
                   {/* Cinematic Film Negative Shading */}
