@@ -34,31 +34,31 @@ export const ChandralokLogo: React.FC<ChandralokLogoProps> = ({
   };
 
   const iconDimension = {
-    sm: 'w-8 h-8 sm:w-10 sm:h-10',
-    md: 'w-10 h-10 sm:w-12 sm:h-12',
-    lg: 'w-13 h-13 sm:w-16 sm:h-16',
-    xl: 'w-18 h-18 sm:w-24 sm:h-24',
+    sm: 'w-7 h-7 sm:w-8 sm:h-8',
+    md: 'w-9 h-9 sm:w-11 sm:h-11',
+    lg: 'w-12 h-12 sm:w-14 sm:h-14',
+    xl: 'w-16 h-16 sm:w-20 sm:h-20',
   }[size];
 
   const titleSize = {
-    sm: 'text-[11px] sm:text-sm',
-    md: 'text-xs sm:text-base font-bold',
+    sm: 'text-xs sm:text-sm font-extrabold',
+    md: 'text-xs sm:text-[15px] font-extrabold',
     lg: 'text-base sm:text-xl font-extrabold',
-    xl: 'text-xl sm:text-3xl font-extrabold',
+    xl: 'text-xl sm:text-2xl font-extrabold',
   }[size];
 
   const hindiSize = {
     sm: 'text-[9px] sm:text-[11px]',
-    md: 'text-[11px] sm:text-[13px]',
-    lg: 'text-xs sm:text-base',
-    xl: 'text-sm sm:text-lg',
+    md: 'text-[10px] sm:text-xs font-semibold',
+    lg: 'text-xs sm:text-sm font-semibold',
+    xl: 'text-sm sm:text-base font-semibold',
   }[size];
 
   return (
-    <div className={`flex items-center gap-2 sm:gap-3 select-none ${className}`}>
+    <div className={`flex items-center gap-2 sm:gap-2.5 select-none min-w-0 ${className}`}>
       {/* Official 3D Signage Logo Circular Badge */}
       <div
-        className={`relative ${iconDimension} shrink-0 rounded-full overflow-hidden p-0.5 bg-gradient-to-tr from-[#00e5ff] via-[#ffb703] to-[#ff6b00] shadow-[0_0_20px_rgba(0,229,255,0.35)] transition-transform duration-300 group-hover:scale-105`}
+        className={`relative ${iconDimension} shrink-0 rounded-full overflow-hidden p-0.5 bg-gradient-to-tr from-[#00e5ff] via-[#ffb703] to-[#ff6b00] shadow-[0_0_12px_rgba(0,229,255,0.25)] transition-transform duration-200 group-hover:scale-105`}
       >
         <div className="w-full h-full rounded-full overflow-hidden bg-[#0a121e] flex items-center justify-center">
           {!isSvgFallback ? (
@@ -73,18 +73,17 @@ export const ChandralokLogo: React.FC<ChandralokLogoProps> = ({
             /* Pristine Inline SVG Vector Fallback - Guaranteed to ALWAYS render even offline or if image fails */
             <svg viewBox="0 0 100 100" className="w-full h-full p-1" fill="none">
               <circle cx="50" cy="50" r="48" fill="#0d1829" stroke="#00e5ff" strokeWidth="1.5" />
-              {/* Corner Viewfinder cyan brackets */}
+              {/* Corner Viewfinder brackets */}
               <path d="M26 30 L20 30 L20 36" stroke="#00e5ff" strokeWidth="2.5" strokeLinecap="round" />
               <path d="M74 30 L80 30 L80 36" stroke="#00e5ff" strokeWidth="2.5" strokeLinecap="round" />
               <path d="M20 48 L20 54 L26 54" stroke="#00e5ff" strokeWidth="2.5" strokeLinecap="round" />
               <path d="M80 48 L80 54 L74 54" stroke="#00e5ff" strokeWidth="2.5" strokeLinecap="round" />
               {/* Orange Camera Body Brackets */}
               <rect x="28" y="32" width="44" height="26" rx="6" stroke="#ff6b00" strokeWidth="3" />
-              {/* Top Yellow Flash / Hotshoe */}
+              {/* Top Flash */}
               <rect x="42" y="27" width="16" height="5" rx="2" fill="#ffb703" />
-              {/* Lens Yellow Crescent with CS */}
+              {/* Lens */}
               <circle cx="50" cy="45" r="10" stroke="#ffb703" strokeWidth="2.5" fill="#050b14" />
-              <path d="M48 40 C43 43 43 49 48 51" stroke="#00e5ff" strokeWidth="1.5" fill="none" />
               <circle cx="53" cy="45" r="2" fill="#ffb703" />
               {/* Hindi Brand Name "चन्द्रलोक" */}
               <text x="50" y="69" textAnchor="middle" fill="#00e5ff" fontSize="12" fontWeight="bold" fontFamily="sans-serif">
@@ -105,26 +104,26 @@ export const ChandralokLogo: React.FC<ChandralokLogoProps> = ({
       </div>
 
       {variant !== 'icon-only' && (
-        /* Typography: English Brand Name + Hindi Name + Sirsaganj */
+        /* Typography: Bold and Simple Classic Website Title in Montserrat */
         <div className="flex flex-col leading-tight min-w-0">
-          <div className="flex items-center gap-1.5 flex-wrap">
+          <div className="flex items-center gap-1 min-w-0">
             <span
-              className={`font-display tracking-[0.12em] uppercase text-white truncate ${titleSize}`}
+              className={`font-title uppercase tracking-wider text-[#3B4436] dark:text-[#EFEFE8] truncate ${titleSize}`}
             >
-              CHANDRALOK <span className="text-[#00e5ff]">STUDIO</span>
+              CHANDRALOK <span className="text-[#B08D57]">STUDIO</span>
             </span>
           </div>
 
           {showHindi && (
             <span
-              className={`font-hindi font-bold text-[#ffb703] tracking-wide mt-0.5 truncate drop-shadow-[0_1px_4px_rgba(255,183,3,0.3)] ${hindiSize}`}
+              className={`font-hindi text-[#3B4436] dark:text-[#EFEFE8] tracking-wide mt-0.5 truncate hidden xs:block ${hindiSize}`}
             >
               चन्द्रलोक फोटो स्टूडियो
             </span>
           )}
 
           {showSubtitle && (
-            <span className="text-[8px] sm:text-[10px] tracking-[0.18em] text-[#ff6b00] uppercase font-semibold mt-0.5 truncate">
+            <span className="text-[8px] sm:text-[9px] tracking-widest text-[#B08D57] uppercase font-bold mt-0.5 truncate hidden sm:block">
               ESTD. 1981 · SIRSAGANJ
             </span>
           )}

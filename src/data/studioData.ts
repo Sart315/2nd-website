@@ -238,92 +238,104 @@ export const BRAND_CAMERAS: EquipmentItem[] = [
   {
     id: "cam-sony-fx3",
     category: "SONY CINEMA",
-    name: "Sony FX3 / FX6 Full-Frame Cinema Line",
-    brand: "Sony",
+    name: "Sony FX3 Full-Frame Cinema Line",
+    brand: "Sony Cinema",
     model: "ILME-FX3 4K Cinema Camera",
     image: getImageUrl("camera_sony_fx3_cine_1791960491755.jpg"),
     specs: "15+ Stops Dynamic Range · 4K 120fps · 10-Bit 4:2:2 All-Intra · S-Cinetone",
     purpose: "Flagship cinema body capturing dimly-lit mandap rituals, high-tempo sangeet dances, and cinematic slow-motion with cinema grade fidelity.",
     type: "Full-Frame Cinema Camera",
-    accent: "#00e5ff"
+    accent: "#0284c7"
   },
   {
     id: "cam-sony-a7s-rig",
     category: "SONY CINEMA",
-    name: "Sony Alpha A7S III Carbon Cinema Cage Rig",
+    name: "Sony Alpha A7S III Carbon Rig",
     brand: "Sony / Tilta",
     model: "Alpha A7S III + Tilta Top Handle & Matte Box",
     image: getImageUrl("sony_a7s_cine_rig_1791960673477.jpg"),
     specs: "Dual Native ISO 800/12800 · G-Master 50mm f/1.2 Glass · Directional Shotgun Mic",
     purpose: "Heavy handheld cinema workhorse for energetic wedding processions, pheras, and candid couple cinematic interactions.",
     type: "Cinema Rigged Workhorse",
-    accent: "#00e5ff"
+    accent: "#0284c7"
   },
   {
     id: "cam-canon-cine",
-    category: "CANON CINEMA",
+    category: "CANON EOS",
     name: "Canon Cinema EOS C-Series & C70",
-    brand: "Canon",
+    brand: "Canon Cinema",
     model: "Cinema EOS C70 / C-Series 4K DGO",
     image: getImageUrl("camera_canon_r_cine_1791960492825.jpg"),
     specs: "Dual Pixel CMOS AF II · DGO Sensor · Canon Log 2/3 · 16+ Stops Dynamic Range",
     purpose: "Celebrated for iconic warm, natural bridal skin tones and flawless color separation in Indian bridal silks and gold jewelry.",
-    type: "Flagship Production Cinema",
-    accent: "#ff6b00"
+    type: "Production Cinema Camera",
+    accent: "#ea580c"
   },
   {
     id: "cam-canon-r5-portrait",
-    category: "CANON CINEMA",
-    name: "Canon Cinema Production & 8K Sensor Rig",
-    brand: "Canon",
-    model: "Cinema EOS System & Prime Cine Glass",
-    image: getImageUrl("camera_canon_r_cine_1791960492825.jpg"),
-    specs: "45MP High-Resolution · 8K RAW · Dual Pixel Intelligent AF · Warm Color Science",
+    category: "CANON EOS",
+    name: "Canon EOS R5 & RF 85mm f/1.2L Glass",
+    brand: "Canon EOS",
+    model: "EOS R5 45MP + RF L-Series Prime Lens",
+    image: getImageUrl("canon_eos_r5_lens_1791960673525.jpg"),
+    specs: "45MP High-Resolution Sensor · 8K RAW · Dual Pixel Intelligent AF · Warm Color Science",
     purpose: "The definitive portrait master: renders royalty-grade bridal portraits with creamy out-of-focus background bokeh and pinpoint eye sharpness.",
-    type: "Cinema Production Body",
-    accent: "#ff6b00"
+    type: "High-Resolution Portrait Camera",
+    accent: "#ea580c"
+  },
+  {
+    id: "cam-nikon-z8",
+    category: "NIKON Z SYSTEM",
+    name: "Nikon Z8 Flagship & Nikkor Z 85mm f/1.2 S",
+    brand: "Nikon Z",
+    model: "Nikon Z8 45.7MP Stacked CMOS Mirrorless",
+    image: getImageUrl("nikon_z8_flagship_lens_1792051669062.jpg"),
+    specs: "45.7MP Stacked Sensor · 8.3K 60p N-RAW · 12-Bit Internal RAW · Real-Time Subject Detection",
+    purpose: "Precision documentary flagship delivering rich micro-contrast, accurate ritual jewelry reflections, and lifelike skin tones under mixed mandap lighting.",
+    type: "Full-Frame Flagship Mirrorless",
+    accent: "#ffb703"
   },
   {
     id: "cam-fujifilm-gfx",
     category: "FUJIFILM SYSTEM",
-    name: "Fujifilm GFX 100 II Large Format Medium Format",
-    brand: "Fujifilm",
+    name: "Fujifilm GFX 100 II Large Format",
+    brand: "Fujifilm GFX",
     model: "GFX 100 II 102MP Large Format Sensor",
     image: getImageUrl("camera_fujifilm_gfx_1791960492780.jpg"),
     specs: "Medium Format 102MP Sensor · 16-Bit RAW · Film Simulation Profiles · Tactile Dials",
     purpose: "Delivers unmatched micro-contrast, organic film simulation grain, and magazine-cover bridal and groom royal portraiture.",
     type: "Medium Format Camera",
-    accent: "#ffb703"
+    accent: "#d97706"
   },
   {
     id: "cam-fujifilm-tactile-retro",
     category: "FUJIFILM SYSTEM",
-    name: "Fujifilm Large-Format Color Science Rig",
+    name: "Fujifilm Classic Color Science System",
     brand: "Fujifilm",
-    model: "GFX Cinema System · Color Simulation",
-    image: getImageUrl("camera_fujifilm_gfx_1791960492780.jpg"),
+    model: "X-Trans System · Analog Film Profiles",
+    image: getImageUrl("fujifilm_classic_camera_1791960674301.jpg"),
     specs: "40.2MP X-Trans CMOS 5 HR · Classic Chrome & Nostalgic Neg · Analog Film Grain",
     purpose: "Tactile, discreet documentary system for silent rituals, intimate family embraces, and timeless monochrome stills.",
-    type: "Large-Format Film Science",
-    accent: "#ffb703"
+    type: "Classic Color Science Body",
+    accent: "#d97706"
   },
   {
     id: "cam-dji-aerial-rig",
-    category: "DRONES",
-    name: "DJI Inspire 3 & 4K HDR Cinema Drone Fleet",
-    brand: "DJI Aerial Cinema",
+    category: "DJI AERIAL",
+    name: "DJI Inspire 3 & 4K Cinema Drone Fleet",
+    brand: "DJI Cinema",
     model: "Inspire 3 Cinema Drone & Ronin 4D 3-Axis Stabilizer",
     image: getImageUrl("dji_drone_cinema_gimbal_1791960674905.jpg"),
     specs: "Full-Frame 8K ProRes RAW · Centimeter-Level RTK Waypoint Pro · LiDAR Focus",
     purpose: "Sweeping cinematic aerial overheads of grand palace venues, baraat entries, firework spectacles, and flowing processions.",
     type: "Aerial Cinema Drone",
-    accent: "#00e5ff"
+    accent: "#0284c7"
   },
   {
     id: "cam-studio-lighting-rig",
     category: "STUDIO LIGHTING",
     name: "Profoto & Continuous Softboxes on Heavy C-Stands",
-    brand: "Profoto / Arri / Godox",
+    brand: "Profoto / Godox",
     model: "High-CRI Octabox Softboxes & Stainless Steel C-Stands",
     image: getImageUrl("studio_lighting_c_stand_1791960700678.jpg"),
     specs: "98+ CRI / TLCI Rating · 120cm Octagonal Diffusers · Heavy Boom Arms with Sandbags",
@@ -334,51 +346,7 @@ export const BRAND_CAMERAS: EquipmentItem[] = [
 ];
 
 export const EQUIPMENT_BENCHMARKS: EquipmentItem[] = [
-  ...BRAND_CAMERAS,
-  {
-    id: "eq-lenses",
-    category: "LENSES",
-    name: "Master Cinema & Portrait Prime Optics",
-    brand: "Sony G Master / Canon RF / Fujinon",
-    model: "35mm T1.5 · 50mm f/1.2 · 85mm f/1.2 L",
-    type: "High-Speed Prime Lenses",
-    specs: "Ultra-Fast T1.5/f1.2 Aperture · Circular 11-Blade Iris · Nano Coating",
-    purpose: "Separates the couple from bustling crowds with creamy, luminous depth-of-field and glowing highlights.",
-    accent: "#00e5ff"
-  },
-  {
-    id: "eq-flashes",
-    category: "FLASH SYSTEMS",
-    name: "High-Speed Sync Wireless Flashes",
-    brand: "Godox / Profoto",
-    model: "V1 Roundhead & AD200 / AD600 Pro",
-    type: "TTL & Manual Wireless Strobes",
-    specs: "1/8000s High-Speed Sync · 2.4GHz Wireless · Magnetic Light Modifiers",
-    purpose: "Freezes energetic dance floor moves during baraat processions and sangeet night without harsh glare.",
-    accent: "#ff6b00"
-  },
-  {
-    id: "eq-audio",
-    category: "AUDIO",
-    name: "32-Bit Float Dual Wireless Mic System",
-    brand: "DJI Mic 2 / RØDE Wireless PRO",
-    model: "32-Bit Float Internal Recording",
-    type: "Wireless Lapel Microphones",
-    specs: "Zero Clipping Distortion · 250m Transmission · Dual Transmitter",
-    purpose: "Preserves crystal-clear mantras, emotional wedding vows, and speeches without distortion.",
-    accent: "#00e5ff"
-  },
-  {
-    id: "eq-stabilization",
-    category: "STABILIZATION",
-    name: "3-Axis Motorized Cinema Gimbals",
-    brand: "DJI Ronin / Zhiyun",
-    model: "RS3 Pro / RS4 Pro Cinema Gimbal",
-    type: "Motorized Stabilization",
-    specs: "Carbon Fiber Arms · Automated Axis Locks · LiDAR Focusing",
-    purpose: "Guarantees buttery-smooth tracking shots while walking alongside the procession.",
-    accent: "#ff6b00"
-  }
+  ...BRAND_CAMERAS
 ];
 
 export const LIGHTING_COMPARISONS = [
@@ -617,5 +585,77 @@ export const TRUST_PILLARS = [
     title: "Unscripted Emotion",
     subtitle: "Personal Stories Over Poses",
     description: "We honor authentic feelings over forced poses. Your film and photographs will preserve the real tears, uninhibited smiles, and quiet intimacy."
+  }
+];
+
+export interface PricingTier {
+  id: string;
+  name: string;
+  subtitle: string;
+  badge?: string;
+  days: string;
+  investment: string;
+  deliverables: string[];
+  gearIncluded: string;
+  recommendedFor: string;
+  isPopular?: boolean;
+}
+
+export const PRICING_TIERS: PricingTier[] = [
+  {
+    id: "tier-classic",
+    name: "Classic Vedic Collection",
+    subtitle: "Sacred Ceremonies & Candid Stills",
+    days: "1-2 Days Coverage",
+    investment: "Custom Consultation",
+    deliverables: [
+      "Senior Candid & Traditional Photographer Duo",
+      "Full Ceremony & Rituals Documentation",
+      "Handcrafted Leatherette Master Album (40 Pages)",
+      "High-Resolution Color Graded Digital Archive",
+      "Same-Day Teaser Photos for Immediate Family"
+    ],
+    gearIncluded: "Canon EOS R5 & Sony Full-Frame · High-Speed Primes",
+    recommendedFor: "Intimate family weddings, ring ceremonies & reception events",
+    isPopular: false
+  },
+  {
+    id: "tier-royal",
+    name: "Royal Cinema & Master Frame",
+    subtitle: "Complete 4K Cinema & Dual Team Mastery",
+    badge: "Most Requested",
+    days: "2-3 Days Coverage",
+    investment: "Bespoke Royal Package",
+    deliverables: [
+      "Full 4-Crew Production (2 Photographers + 2 Cinematographers)",
+      "4K Ultra-HD Cinematic Wedding Teaser (3-5 Minutes)",
+      "Full-Length Feature Documentary Film (45-60 Minutes)",
+      "Multi-Angle DJI Aerial Drone Perspectives",
+      "Custom Italian Silk Coffee Table Heritage Album (60 Pages)",
+      "Pre-Wedding Editorial Session Included"
+    ],
+    gearIncluded: "Sony FX3 Cinema Line · Canon C-Series · DJI Inspire 3 · Octaboxes",
+    recommendedFor: "Grand multi-day weddings with Sangeet, Haldi, Baraat & Reception",
+    isPopular: true
+  },
+  {
+    id: "tier-heirloom",
+    name: "Generational Heirloom Suite",
+    subtitle: "The Ultimate Royal Heritage Production",
+    badge: "Signature Legacy",
+    days: "3-4 Days Full Access",
+    investment: "Private Studio Commission",
+    deliverables: [
+      "Master Director-Led 6-Person Production Crew",
+      "Medium Format 102MP Fine-Art Bridal & Groom Portraits",
+      "2.39:1 Anamorphic Royal Feature Film with 32-Bit Sound",
+      "Dual Drone Cinematic Coverage & Crane Motion Systems",
+      "Twin Archival Heirloom Albums + 2 Mini Parent Albums",
+      "Complimentary Pre-Wedding Cinema Teaser for Sangeet Premiere",
+      "Custom Engraved Wooden Keepsake Box with Master Flash Drives"
+    ],
+    gearIncluded: "Fujifilm GFX 100 II · Sony FX3 Cinema Fleet · Nikon Z8 · Profoto C-Stands",
+    recommendedFor: "Destination palace weddings, royal estates & multi-generational celebrations",
+    isPopular: false
   }
 ];

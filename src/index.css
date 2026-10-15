@@ -1,136 +1,176 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
   :root {
-    --font-display: "Outfit", system-ui, -apple-system, sans-serif;
-    --font-serif: "Playfair Display", Georgia, serif;
-    --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
-    --font-hindi: "Noto Sans Devanagari", system-ui, sans-serif;
+    /* Exact Design Tokens */
+    --color-bone-white: #EFEFE8;
+    --color-moss-green: #3B4436;
+    --color-tan-leather: #B08D57;
+    --color-tan-leather-hover: #9c7b49;
 
-    /* Brand Logo Inspired Palette */
-    --brand-cyan: #00e5ff;
-    --brand-orange: #ff6b00;
-    --brand-yellow: #ffb703;
-    --brand-navy: #050b14;
-    --brand-charcoal: #0e1522;
+    /* Bold & Simple Classic Typography Hierarchy */
+    --font-heading: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-title: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-hindi: "Noto Sans Devanagari", sans-serif;
+    --font-serif: "Playfair Display", Georgia, serif;
+
+    /* Light Theme (60% Bone White, 30% Moss Green, 10% Tan Leather) */
+    --theme-bg: #EFEFE8;
+    --theme-surface: #F7F7F2;
+    --theme-card: #FFFFFF;
+    --theme-border: #D8D8CF;
+    --theme-border-subtle: #E4E4DC;
+    --theme-text: #3B4436;
+    --theme-muted: #5C6755;
+    --theme-accent: #B08D57;
   }
 
-  body {
-    font-family: var(--font-sans);
-    background-color: #050b14;
-    color: #f8fafc;
+  /* Coordinated Darkroom Cinema Mode */
+  html.dark {
+    --theme-bg: #181C16;
+    --theme-surface: #20251E;
+    --theme-card: #232A20;
+    --theme-border: #2E3729;
+    --theme-border-subtle: #272F23;
+    --theme-text: #EFEFE8;
+    --theme-muted: #A3AFA0;
+    --theme-accent: #C7A269;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
     overflow-x: hidden;
   }
 
-  h1, h2, h3, .font-display {
-    font-family: var(--font-display);
+  body {
+    font-family: var(--font-body);
+    background-color: var(--theme-bg);
+    color: var(--theme-text);
+    transition: background-color 0.2s ease, color 0.2s ease;
+    overflow-x: hidden;
+    width: 100%;
+    margin: 0;
+    padding: 0;
   }
 
-  .font-serif-cinematic {
-    font-family: var(--font-serif);
+  h1, h2, h3, h4, .font-heading, .font-title, .font-display {
+    font-family: var(--font-heading);
+    letter-spacing: -0.01em;
+  }
+
+  .font-body {
+    font-family: var(--font-body);
   }
 
   .font-hindi {
     font-family: var(--font-hindi);
   }
+
+  .font-serif-classic {
+    font-family: var(--font-serif);
+  }
 }
 
-/* 3D Perspective & Spatial Utilities */
-.perspective-1000 {
-  perspective: 1000px;
+* {
+  box-sizing: border-box;
 }
 
-.perspective-1500 {
-  perspective: 1500px;
+/* Atmospheric Moss Green Smoke Canvas (Soft, organic studio haze mist blending with Bone White) */
+.moss-smoke-canvas {
+  background-color: #EFEFE8;
+  background-image: 
+    radial-gradient(ellipse 65% 50% at 12% 15%, rgba(59, 68, 54, 0.08) 0%, rgba(59, 68, 54, 0.03) 40%, transparent 70%),
+    radial-gradient(ellipse 60% 55% at 88% 28%, rgba(59, 68, 54, 0.07) 0%, rgba(59, 68, 54, 0.02) 45%, transparent 75%),
+    radial-gradient(ellipse 75% 60% at 35% 68%, rgba(59, 68, 54, 0.07) 0%, rgba(59, 68, 54, 0.02) 45%, transparent 75%),
+    radial-gradient(ellipse 60% 50% at 80% 88%, rgba(59, 68, 54, 0.06) 0%, rgba(59, 68, 54, 0.02) 40%, transparent 70%),
+    radial-gradient(ellipse 45% 40% at 50% 48%, rgba(176, 141, 87, 0.04) 0%, transparent 60%);
+  background-attachment: fixed;
 }
 
-.perspective-2000 {
-  perspective: 2000px;
+html.dark .moss-smoke-canvas {
+  background-color: #181C16;
+  background-image: 
+    radial-gradient(ellipse 65% 50% at 12% 15%, rgba(59, 68, 54, 0.32) 0%, rgba(59, 68, 54, 0.12) 40%, transparent 70%),
+    radial-gradient(ellipse 60% 55% at 88% 28%, rgba(59, 68, 54, 0.28) 0%, rgba(59, 68, 54, 0.08) 45%, transparent 75%),
+    radial-gradient(ellipse 75% 60% at 35% 68%, rgba(59, 68, 54, 0.28) 0%, rgba(59, 68, 54, 0.09) 45%, transparent 75%),
+    radial-gradient(ellipse 60% 50% at 80% 88%, rgba(59, 68, 54, 0.24) 0%, rgba(59, 68, 54, 0.06) 40%, transparent 70%),
+    radial-gradient(ellipse 45% 40% at 50% 48%, rgba(199, 162, 105, 0.07) 0%, transparent 60%);
+  background-attachment: fixed;
 }
 
-.transform-style-3d {
-  transform-style: preserve-3d;
+/* Ultra-Smooth 60fps Hardware-Accelerated Smoke Movement (Zero Jank, Zero Heavy Filters) */
+@keyframes smokeDriftOne {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(18px, -24px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
 }
 
-.backface-hidden {
+@keyframes smokeDriftTwo {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(-20px, 16px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.smoke-cloud-1 {
+  animation: smokeDriftOne 24s ease-in-out infinite;
+  will-change: transform;
   backface-visibility: hidden;
 }
 
-/* Subtle Film Grain */
-.film-grain {
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+.smoke-cloud-2 {
+  animation: smokeDriftTwo 30s ease-in-out infinite;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
-/* Studio Lighting & Motion Keyframes */
-@keyframes floatSlow {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-14px) rotate(1.5deg);
-  }
-}
-
-@keyframes rotateSlow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes studioBeamPulse {
-  0%, 100% {
-    opacity: 0.15;
-    transform: scale(1) translateY(0);
-  }
-  50% {
-    opacity: 0.32;
-    transform: scale(1.04) translateY(-10px);
-  }
-}
-
-@keyframes viewfinderBlink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
-
-.animate-float-slow {
-  animation: floatSlow 12s ease-in-out infinite;
-}
-
-.animate-rotate-slow {
-  animation: rotateSlow 60s linear infinite;
-}
-
-.animate-studio-beam {
-  animation: studioBeamPulse 8s ease-in-out infinite;
-}
-
-.animate-viewfinder {
-  animation: viewfinderBlink 2s ease-in-out infinite;
-}
-
-/* Custom Scrollbar styled with Electric Cyan and Deep Navy */
+/* Minimalist Refined Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
 
-::-webkit-scrollbar-track {
-  background: #050b14;
+html.dark ::-webkit-scrollbar-track {
+  background: #181C16;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #1e293b;
+html.dark ::-webkit-scrollbar-thumb {
+  background: #2E3729;
   border-radius: 3px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #00e5ff;
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #B08D57;
 }
 
-/* Reduced Motion Override for Accessibility */
+html.light ::-webkit-scrollbar-track {
+  background: #EFEFE8;
+}
+
+html.light ::-webkit-scrollbar-thumb {
+  background: #CFCFC5;
+  border-radius: 3px;
+}
+
+html.light ::-webkit-scrollbar-thumb:hover {
+  background: #B08D57;
+}
+
+/* Reduced Motion Override */
 html.reduced-motion *,
 html.reduced-motion *::before,
 html.reduced-motion *::after {
@@ -138,8 +178,4 @@ html.reduced-motion *::after {
   animation-iteration-count: 1 !important;
   transition-duration: 0.001ms !important;
   scroll-behavior: auto !important;
-}
-
-html.reduced-motion .transform-style-3d {
-  transform: none !important;
 }

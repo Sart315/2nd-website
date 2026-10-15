@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Play, Pause, RotateCcw, ChevronLeft, ChevronRight, Film, Sparkles, Disc } from 'lucide-react';
+import { Play, Pause, RotateCcw, ChevronLeft, ChevronRight, Disc } from 'lucide-react';
 import { useMotion } from '../context/MotionContext';
 import { getImageUrl, handleImageFallback } from '../utils/assetImages';
 
@@ -30,56 +30,55 @@ export const FilmStripRollingAnimation: React.FC<FilmStripRollingAnimationProps>
     {
       id: 'frame-1981',
       year: '1981',
-      badge: 'THE ANALOG ORIGIN',
+      badge: 'Analog Heritage',
       title: 'Manual 35mm SLR & Darkroom',
-      camera: 'Mechanical 35mm Shutter · Prime Glass',
-      detail: 'Etawah Road Studio Origin · Silver Halide Chemistry',
+      camera: 'Mechanical Shutter & Prime Optics',
+      detail: 'Etawah Road Studio Origin · Silver Halide Craft',
       image: getImageUrl('hero_cinematic_couple_1791896401138.jpg'),
-      accent: '#ffb703',
-      expNumber: 'EXP-1981',
+      accent: '#B08D57',
+      expNumber: 'Frame 01',
     },
     {
       id: 'frame-1990s',
       year: '1990s',
-      badge: 'ROYAL HERITAGE',
+      badge: 'Royal Traditions',
       title: 'Medium Format Wedding Vows',
-      camera: '120mm Color Negative · Halogen Lighting',
-      detail: 'Sacred Mandaps & Processions Across Uttar Pradesh',
+      camera: '120mm Film · Halogen Studio Lighting',
+      detail: 'Sacred Mandaps & Processions in Sirsaganj',
       image: getImageUrl('wedding_story_varmala_1791896401614.jpg'),
-      accent: '#ff6b00',
-      expNumber: 'EXP-1990',
+      accent: '#B08D57',
+      expNumber: 'Frame 02',
     },
     {
       id: 'frame-2010s',
       year: '2010s',
-      badge: 'DIGITAL REVOLUTION',
+      badge: 'Digital Era',
       title: 'Full-Frame Digital Sensors',
       camera: 'Canon EOS L-Series & High-Speed Primes',
-      detail: 'Pioneering Candid Photojournalism & Softboxes',
+      detail: 'Candid Photojournalism & Softbox Lighting',
       image: getImageUrl('royal_bridal_portrait_1791898990033.jpg'),
-      accent: '#00e5ff',
-      expNumber: 'EXP-2010',
+      accent: '#B08D57',
+      expNumber: 'Frame 03',
     },
     {
       id: 'frame-now',
-      year: 'NOW',
-      badge: '4K/8K CINEMA LINE',
-      title: 'Master Cinema & Drone Fleet',
-      camera: 'Sony FX3 · Canon Cine · Fujifilm GFX · DJI Drones',
-      detail: '4K 120fps 10-Bit Log · 2.39:1 Anamorphic Color Science',
-      image: getImageUrl('sony_a7s_cine_rig_1791960673477.jpg'),
-      accent: '#38bdf8',
-      expNumber: 'EXP-2026',
+      year: 'Today',
+      badge: '4K Cinema',
+      title: 'Cinema Line & Drone Fleet',
+      camera: 'Sony FX3 · Nikon Z8 · Canon Cine · DJI Drones',
+      detail: '4K 120fps 10-Bit · Anamorphic Color Grading',
+      image: getImageUrl('cinematic_film_still_1791896403634.jpg'),
+      accent: '#B08D57',
+      expNumber: 'Frame 04',
     },
   ];
 
-  // Auto-roll film strip
   useEffect(() => {
     if (!isRolling || reducedMotion) return;
 
     const timer = setInterval(() => {
       setCurrentFrameIndex((prev) => (prev + 1) % frames.length);
-    }, 3800);
+    }, 4500);
 
     return () => clearInterval(timer);
   }, [isRolling, reducedMotion, frames.length]);
@@ -96,57 +95,43 @@ export const FilmStripRollingAnimation: React.FC<FilmStripRollingAnimationProps>
 
   return (
     <div className="w-full max-w-lg lg:max-w-xl mx-auto select-none">
-      {/* Sleek Transparent Glassy Outer Casing with Curved Corners */}
-      <div className="p-3 sm:p-4 rounded-2xl bg-white/[0.04] backdrop-blur-xl border border-white/10 shadow-[0_16px_40px_rgba(0,0,0,0.6)] relative overflow-hidden group">
-        {/* Subtle Ambient Rim Glow */}
-        <div
-          className="absolute -top-10 -right-10 w-44 h-44 rounded-full blur-3xl opacity-30 pointer-events-none transition-colors duration-700"
-          style={{ backgroundColor: activeFrame.accent }}
-        />
-
-        {/* Top Mini Header: Spool Title & Controls */}
-        <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/10 text-[11px] font-mono">
+      {/* Solid Minimalist Film Strip Casing in Bone White / Darkroom */}
+      <div className="p-4 rounded-3xl bg-white dark:bg-[#20251E] border border-[#D8D8CF] dark:border-[#2E3729] shadow-sm relative overflow-hidden">
+        {/* Top Header */}
+        <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#D8D8CF] dark:border-[#2E3729] text-xs">
           <div className="flex items-center gap-2">
-            {/* Spinning Spool Wheel */}
-            <div
-              className={`w-5 h-5 rounded-full border border-white/30 flex items-center justify-center text-white/80 ${
-                isRolling && !reducedMotion ? 'animate-spin' : ''
-              }`}
-              style={{ animationDuration: '4s' }}
-            >
-              <Disc className="w-3.5 h-3.5" style={{ color: activeFrame.accent }} />
-            </div>
-            <span className="font-bold tracking-widest uppercase text-white/90 text-[10px]">
-              35MM FILM ROLL // ESTD. 1981 → NOW
+            <Disc className="w-4 h-4 text-[#B08D57]" />
+            <span className="font-semibold tracking-widest uppercase text-[#3B4436] dark:text-[#EFEFE8] text-[10px]">
+              35mm Film Roll Archive · 1981 → Present
             </span>
           </div>
 
-          {/* Curved Glass Controls: Play, Prev, Next */}
-          <div className="flex items-center gap-1.5 bg-black/40 backdrop-blur-md px-2 py-1 rounded-full border border-white/10">
+          {/* Controls */}
+          <div className="flex items-center gap-1 bg-[#EFEFE8] dark:bg-[#181C16] px-2 py-0.5 rounded-full border border-[#D8D8CF] dark:border-[#2E3729]">
             <button
               onClick={() => setIsRolling(!isRolling)}
-              className="p-1 text-white/70 hover:text-white transition-colors cursor-pointer rounded-full"
-              title={isRolling ? 'Pause Roll' : 'Play Roll'}
+              className="p-1 text-[#3B4436] dark:text-[#EFEFE8] hover:text-[#B08D57] cursor-pointer"
+              title={isRolling ? 'Pause' : 'Play'}
             >
               {isRolling ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
             </button>
             <button
               onClick={handlePrev}
-              className="p-1 text-white/70 hover:text-[#00e5ff] transition-colors cursor-pointer rounded-full"
-              title="Previous Era"
+              className="p-1 text-[#3B4436] dark:text-[#EFEFE8] hover:text-[#B08D57] cursor-pointer"
+              title="Previous Frame"
             >
               <ChevronLeft className="w-3 h-3" />
             </button>
             <button
               onClick={handleNext}
-              className="p-1 text-white/70 hover:text-[#00e5ff] transition-colors cursor-pointer rounded-full"
-              title="Next Era"
+              className="p-1 text-[#3B4436] dark:text-[#EFEFE8] hover:text-[#B08D57] cursor-pointer"
+              title="Next Frame"
             >
               <ChevronRight className="w-3 h-3" />
             </button>
             <button
               onClick={() => setCurrentFrameIndex(0)}
-              className="p-1 text-white/70 hover:text-[#ffb703] transition-colors cursor-pointer rounded-full"
+              className="p-1 text-[#3B4436] dark:text-[#EFEFE8] hover:text-[#B08D57] cursor-pointer"
               title="Rewind to 1981"
             >
               <RotateCcw className="w-2.5 h-2.5" />
@@ -154,36 +139,32 @@ export const FilmStripRollingAnimation: React.FC<FilmStripRollingAnimationProps>
           </div>
         </div>
 
-        {/* 35MM RECTANGULAR FILM STRIP HOUSING */}
-        <div className="relative w-full rounded-xl overflow-hidden bg-[#05080e] border border-white/15 shadow-inner">
-          {/* Top Film Sprocket Holes Perforation Ribbon */}
-          <div className="h-4 sm:h-5 bg-black flex items-center justify-between px-2.5 border-b border-white/10 overflow-hidden">
+        {/* 35mm Rectangular Film Strip Housing */}
+        <div className="relative w-full rounded-2xl overflow-hidden bg-stone-950 border border-stone-800">
+          {/* Top Film Sprocket Holes */}
+          <div className="h-4 sm:h-4.5 bg-black flex items-center justify-between px-2.5 border-b border-stone-800 overflow-hidden">
             <div className="flex items-center gap-2">
               {[...Array(12)].map((_, i) => (
                 <div
                   key={`sprocket-top-${i}`}
-                  className="w-2 h-2.5 sm:w-2.5 sm:h-3 rounded-xs bg-[#1a2333] border border-white/20 shrink-0"
+                  className="w-2 h-2.5 rounded-xs bg-[#222831] border border-stone-700 shrink-0"
                 />
               ))}
             </div>
-            <div className="text-[8px] font-mono text-white/50 tracking-[0.2em] uppercase shrink-0 hidden sm:block">
-              35MM KODAK / FUJI SAFETY FILM · CHANDRALOK SIRSAGANJ
+            <div className="text-[8px] font-mono text-stone-400 tracking-widest uppercase shrink-0 hidden sm:block">
+              Safety Film · Chandralok Sirsaganj
             </div>
           </div>
 
-          {/* Central Rectangular Film Negative Frame (Aspect 16:9 - Compact & Crisp) */}
-          <div className="relative aspect-[16/9] w-full overflow-hidden bg-[#070d17]">
+          {/* Central Negative Frame */}
+          <div className="relative aspect-[16/9] w-full overflow-hidden bg-stone-900">
             {frames.map((frame, idx) => {
               const isActive = idx === currentFrameIndex;
               return (
                 <div
                   key={frame.id}
-                  className={`absolute inset-0 transition-all duration-700 ease-out ${
-                    isActive
-                      ? 'opacity-100 scale-100 z-10 translate-x-0'
-                      : idx < currentFrameIndex
-                      ? 'opacity-0 scale-95 -translate-x-12 z-0'
-                      : 'opacity-0 scale-95 translate-x-12 z-0'
+                  className={`absolute inset-0 transition-opacity duration-300 ${
+                    isActive ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
                   }`}
                 >
                   <img
@@ -191,34 +172,28 @@ export const FilmStripRollingAnimation: React.FC<FilmStripRollingAnimationProps>
                     alt={`${frame.year} - ${frame.title}`}
                     referrerPolicy="no-referrer"
                     onError={handleImageFallback}
+                    loading={idx === 0 ? 'eager' : 'lazy'}
+                    decoding="async"
                     className="w-full h-full object-cover"
                   />
-                  {/* Cinematic Film Negative Shading */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/40" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/30" />
 
-                  {/* Frame Metadata Watermark */}
-                  <div className="absolute top-2.5 left-3 right-3 flex items-center justify-between text-[10px] font-mono text-white/90">
-                    <span
-                      className="px-2 py-0.5 rounded-full text-[9px] font-bold border backdrop-blur-md"
-                      style={{
-                        borderColor: `${frame.accent}60`,
-                        backgroundColor: `${frame.accent}20`,
-                        color: frame.accent,
-                      }}
-                    >
-                      {frame.year} // {frame.badge}
+                  {/* Frame Metadata */}
+                  <div className="absolute top-2.5 left-3 right-3 flex items-center justify-between text-[10px] font-medium text-white">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-black/75 text-[#B08D57]">
+                      {frame.year} · {frame.badge}
                     </span>
-                    <span className="text-white/60 bg-black/60 px-2 py-0.5 rounded-full text-[9px] backdrop-blur-xs">
+                    <span className="text-stone-300 bg-black/75 px-2 py-0.5 rounded text-[9px] font-mono">
                       {frame.expNumber}
                     </span>
                   </div>
 
-                  {/* Lower Frame Text Overlay */}
+                  {/* Lower Frame Text */}
                   <div className="absolute bottom-2.5 left-3 right-3">
-                    <h4 className="font-display text-base sm:text-lg font-bold text-white uppercase leading-snug drop-shadow-md">
+                    <h4 className="font-heading text-base sm:text-lg font-normal text-white uppercase leading-snug">
                       {frame.title}
                     </h4>
-                    <p className="text-[10px] sm:text-[11px] font-mono text-[#cbd5e1] truncate drop-shadow-sm mt-0.5">
+                    <p className="font-body text-[10px] sm:text-[11px] text-stone-300 truncate mt-0.5">
                       {frame.camera} · {frame.detail}
                     </p>
                   </div>
@@ -227,45 +202,37 @@ export const FilmStripRollingAnimation: React.FC<FilmStripRollingAnimationProps>
             })}
           </div>
 
-          {/* Bottom Film Sprocket Holes Perforation Ribbon */}
-          <div className="h-4 sm:h-5 bg-black flex items-center justify-between px-2.5 border-t border-white/10 overflow-hidden">
+          {/* Bottom Film Sprocket Holes */}
+          <div className="h-4 sm:h-4.5 bg-black flex items-center justify-between px-2.5 border-t border-stone-800 overflow-hidden">
             <div className="flex items-center gap-2">
               {[...Array(12)].map((_, i) => (
                 <div
                   key={`sprocket-bot-${i}`}
-                  className="w-2 h-2.5 sm:w-2.5 sm:h-3 rounded-xs bg-[#1a2333] border border-white/20 shrink-0"
+                  className="w-2 h-2.5 rounded-xs bg-[#222831] border border-stone-700 shrink-0"
                 />
               ))}
             </div>
-            <div className="text-[8px] font-mono text-[#ffb703] tracking-widest uppercase shrink-0">
-              1981 → 2026 ROLL
+            <div className="text-[8px] font-mono text-[#B08D57] tracking-wider uppercase shrink-0">
+              1981 → 2026 Archive
             </div>
           </div>
         </div>
 
-        {/* Bottom Curved Era Pill Tabs */}
-        <div className="grid grid-cols-4 gap-1.5 mt-2.5">
+        {/* Bottom Era Navigation Buttons */}
+        <div className="grid grid-cols-4 gap-1.5 mt-3">
           {frames.map((frame, idx) => {
             const isSelected = idx === currentFrameIndex;
             return (
               <button
                 key={`tab-${frame.id}`}
-                onClick={() => {
-                  setCurrentFrameIndex(idx);
-                }}
-                className={`py-1.5 px-1 sm:px-2 text-center rounded-full text-[10px] font-mono uppercase tracking-wider transition-all duration-200 border cursor-pointer ${
+                onClick={() => setCurrentFrameIndex(idx)}
+                className={`py-1.5 px-1 sm:px-2 text-center rounded-xl text-[11px] font-semibold tracking-wider uppercase transition-colors border cursor-pointer ${
                   isSelected
-                    ? 'bg-white/15 border-white/40 text-white font-bold shadow-[0_0_12px_rgba(0,229,255,0.3)]'
-                    : 'bg-black/30 border-white/10 text-white/60 hover:border-white/25 hover:text-white'
+                    ? 'bg-[#B08D57] text-white border-[#B08D57]'
+                    : 'bg-[#EFEFE8] dark:bg-[#181C16] border-[#D8D8CF] dark:border-[#2E3729] text-[#3B4436] dark:text-[#EFEFE8] hover:text-[#B08D57]'
                 }`}
               >
-                <div className="flex items-center justify-center gap-1">
-                  <span
-                    className="w-1.5 h-1.5 rounded-full shrink-0"
-                    style={{ backgroundColor: frame.accent }}
-                  />
-                  <span>{frame.year}</span>
-                </div>
+                <span>{frame.year}</span>
               </button>
             );
           })}
