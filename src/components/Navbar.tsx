@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Phone, Calendar, Sun, Moon } from 'lucide-react';
+import { Menu, X, Calendar, ArrowRight, MessageCircle, Sun, Moon } from 'lucide-react';
 import { STUDIO_INFO } from '../data/studioData';
 import { ChandralokLogo } from './ChandralokLogo';
 import { useTheme } from '../context/ThemeContext';
@@ -14,14 +14,21 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
   const { isDark, toggleTheme } = useTheme();
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 15);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 20);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Lock body scroll when mobile drawer popup is active
+  // Prevent background scroll when mobile popup drawer is open
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -34,186 +41,275 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
   }, [mobileMenuOpen]);
 
   const navLinks = [
-    { name: 'Collections', href: '#services' },
-    { name: 'Heritage', href: '#legacy' },
-    { name: 'Equipment', href: '#equipment' },
-    { name: 'Reviews', href: '#reviews' },
-    { name: 'Journal', href: '#social' },
-    { name: 'Reserve', href: '#booking' },
+    { name: 'HOME', href: '#hero' },
+    { name: 'WORK', href: '#portfolio' },
+    { name: 'STORIES', href: '#featured-story' },
+    { name: 'SERVICES', href: '#services' },
+    { name: 'ABOUT', href: '#about' },
+    { name: 'CONTACT', href: '#booking' },
   ];
 
-  const handleMobileNavClick = (href: string) => {
+  const handleNavClick = (href: string) => {
     setMobileMenuOpen(false);
-    const target = document.querySelector(href);
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
+    const el = document.querySelector(href);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-200 ${
-        isScrolled
-          ? 'bg-[#EFEFE8] dark:bg-[#181C16] border-b border-[#D8D8CF] dark:border-[#2E3729] py-2.5 sm:py-3 shadow-xs'
-          : 'bg-[#EFEFE8]/95 dark:bg-[#181C16]/95 py-3 sm:py-4 border-b border-[#D8D8CF]/70 dark:border-[#2E3729]/70'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-2 sm:gap-4 w-full">
-        {/* Zone 1: Brand Wordmark (Constrained on mobile so right controls never get pushed off screen) */}
-        <a
-          href="#hero"
-          className="flex items-center shrink min-w-0 max-w-[48vw] xs:max-w-[54vw] sm:max-w-none group"
-          aria-label="Chandralok Studio Home"
-        >
-          <ChandralokLogo size="md" showHindi={true} showSubtitle={true} />
-        </a>
-
-        {/* Zone 2: Desktop Navigation Links in Bold & Simple Classic Montserrat */}
-        <nav className="hidden lg:flex items-center gap-7 text-[11px] font-bold tracking-widest uppercase text-[#3B4436] dark:text-[#EFEFE8]">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="hover:text-[#B08D57] transition-colors py-1 whitespace-nowrap shrink-0"
-            >
-              {link.name}
-            </a>
-          ))}
-        </nav>
-
-        {/* Zone 3: Direct Phone, Daylight/Darkroom Theme Toggle, Tan Leather 'Book Now', and 3-Lines Menu */}
-        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
-          {/* Direct Phone Call (Desktop / Tablet) */}
+    <>
+      <header
+        className={`fixed top-0 left-0 right-0 z-40 transition-colors duration-200 ${
+          isScrolled
+            ? isDark
+              ? 'bg-[#0D0F0E]/95 border-b border-white/10 py-3 sm:py-3.5 shadow-lg'
+              : 'bg-[#F9F9F6]/95 border-b border-[#2C3528]/15 py-3 sm:py-3.5 shadow-md text-[#1E2520]'
+            : isDark
+            ? 'bg-gradient-to-b from-black/85 via-black/45 to-transparent py-4 sm:py-5 border-b border-white/5'
+            : 'bg-gradient-to-b from-[#F9F9F6]/90 via-[#F9F9F6]/50 to-transparent py-4 sm:py-5 border-b border-[#2C3528]/10 text-[#1E2520]'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-2 sm:gap-3 w-full">
+          {/* Brand Wordmark & Official Logo */}
           <a
-            href={`tel:${STUDIO_INFO.phone}`}
-            className="hidden md:flex items-center gap-1.5 text-xs font-semibold text-[#3B4436] dark:text-[#EFEFE8] hover:text-[#B08D57] transition-colors py-2 px-3.5 rounded-full bg-white dark:bg-[#20251E] border border-[#D8D8CF] dark:border-[#2E3729] shrink-0"
-            title="Call Studio Direct"
+            href="#hero"
+            onClick={(e) => {
+              e.preventDefault();
+              handleNavClick('#hero');
+            }}
+            className="flex items-center shrink min-w-0 max-w-[50vw] sm:max-w-none group cursor-pointer"
+            aria-label="Chandralok Studio Home"
           >
-            <Phone className="w-3.5 h-3.5 text-[#B08D57]" />
-            <span className="font-mono text-xs">{STUDIO_INFO.phoneFormatted}</span>
+            <ChandralokLogo size="md" showHindi={true} showSubtitle={true} />
           </a>
 
-          {/* Daylight / Darkroom Cinema Theme Toggle Button */}
-          <button
-            onClick={toggleTheme}
-            aria-label={isDark ? 'Switch to Daylight Gallery theme' : 'Switch to Darkroom Cinema theme'}
-            title={isDark ? 'Daylight Bone White' : 'Darkroom Cinema'}
-            className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white dark:bg-[#20251E] border border-[#D8D8CF] dark:border-[#2E3729] text-[#3B4436] dark:text-[#EFEFE8] hover:text-[#B08D57] transition-colors cursor-pointer shadow-xs active:scale-95 flex items-center justify-center shrink-0"
+          {/* Minimal Editorial Navigation Links (Desktop) */}
+          <nav
+            className={`hidden md:flex items-center gap-6 lg:gap-8 text-[11px] font-bold tracking-[0.2em] uppercase ${
+              isDark ? 'text-[#F7F7F2]/80' : 'text-[#1E2520]/80'
+            }`}
           >
-            {isDark ? (
-              <Sun className="w-4 h-4 text-[#B08D57]" />
-            ) : (
-              <Moon className="w-4 h-4 text-[#3B4436]" />
-            )}
-          </button>
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavClick(link.href);
+                }}
+                className={`transition-colors py-1 relative group cursor-pointer ${
+                  isDark ? 'hover:text-[#C5A880]' : 'hover:text-[#B08D57]'
+                }`}
+              >
+                <span>{link.name}</span>
+                <span
+                  className={`absolute bottom-0 left-0 w-0 h-px transition-all duration-200 group-hover:w-full ${
+                    isDark ? 'bg-[#C5A880]' : 'bg-[#B08D57]'
+                  }`}
+                />
+              </a>
+            ))}
+          </nav>
 
-          {/* Tan Leather Call-to-Action (CTA): Book Now */}
-          <button
-            onClick={onOpenBooking}
-            className="px-2.5 py-1.5 xs:px-3 sm:px-4 lg:px-5 sm:py-2 text-[10px] xs:text-[11px] sm:text-xs font-bold tracking-wider uppercase text-white bg-[#B08D57] hover:bg-[#9c7b49] active:scale-95 transition-colors shadow-xs whitespace-nowrap cursor-pointer rounded-full shrink-0 flex items-center gap-1 sm:gap-1.5"
-          >
-            <Calendar className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-            <span>Book Now</span>
-          </button>
+          {/* Action Controls: Dark/Light Mode + CHECK YOUR DATE + Mobile 3-Lines */}
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            {/* Header Dark & Light Mode Button */}
+            <button
+              onClick={toggleTheme}
+              aria-label={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+              title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+              className={`p-2 sm:px-3 sm:py-2 rounded-full border transition-all flex items-center gap-1.5 cursor-pointer text-xs font-semibold ${
+                isDark
+                  ? 'bg-white/10 hover:bg-white/15 border-white/15 text-[#C5A880]'
+                  : 'bg-[#2C3528]/10 hover:bg-[#2C3528]/15 border-[#2C3528]/20 text-[#B08D57]'
+              }`}
+            >
+              {isDark ? (
+                <>
+                  <Sun className="w-4 h-4 text-amber-300" />
+                  <span className="hidden lg:inline text-[10px] tracking-wider uppercase text-white/90">Light</span>
+                </>
+              ) : (
+                <>
+                  <Moon className="w-4 h-4 text-[#2C3528]" />
+                  <span className="hidden lg:inline text-[10px] tracking-wider uppercase text-[#1E2520]">Dark</span>
+                </>
+              )}
+            </button>
 
-          {/* 3-Lines Mobile Menu Toggle Button (Strictly sized and shrink-0 so it NEVER crosses screen edge) */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white dark:bg-[#20251E] border border-[#D8D8CF] dark:border-[#2E3729] text-[#3B4436] dark:text-[#EFEFE8] hover:text-[#B08D57] flex items-center justify-center cursor-pointer shrink-0"
-            aria-label="Toggle navigation menu"
-          >
-            {mobileMenuOpen ? (
-              <X className="w-4 h-4 sm:w-5 sm:h-5 text-[#B08D57]" />
-            ) : (
-              <Menu className="w-4 h-4 sm:w-5 sm:h-5" />
-            )}
-          </button>
+            {/* Check Your Date Button */}
+            <button
+              onClick={onOpenBooking}
+              className={`px-3 py-2 sm:px-5 sm:py-2.5 text-[10px] sm:text-xs font-bold tracking-[0.16em] uppercase active:scale-95 transition-all shadow-xs rounded-full flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
+                isDark
+                  ? 'text-[#0D0F0E] bg-[#C5A880] hover:bg-[#B3956D]'
+                  : 'text-[#FFFFFF] bg-[#B08D57] hover:bg-[#967442]'
+              }`}
+            >
+              <Calendar className="w-3.5 h-3.5" />
+              <span className="hidden xs:inline">Check Your Date</span>
+              <span className="xs:hidden">Book</span>
+            </button>
+
+            {/* 3 Lines Hamburger Menu Button (Engineered for Flawless Responsiveness) */}
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen((prev) => !prev)}
+              aria-expanded={mobileMenuOpen}
+              aria-label={mobileMenuOpen ? 'Close Navigation Menu' : 'Open Navigation Menu'}
+              className={`md:hidden min-w-[40px] min-h-[40px] w-10 h-10 rounded-full border flex items-center justify-center cursor-pointer transition-colors z-50 ${
+                isDark
+                  ? 'bg-white/10 hover:bg-white/15 border-white/15 text-white active:bg-white/20'
+                  : 'bg-[#2C3528]/10 hover:bg-[#2C3528]/15 border-[#2C3528]/20 text-[#1E2520] active:bg-[#2C3528]/20'
+              }`}
+            >
+              {mobileMenuOpen ? (
+                <X className={`w-5 h-5 ${isDark ? 'text-[#C5A880]' : 'text-[#B08D57]'}`} />
+              ) : (
+                <Menu className="w-5 h-5 stroke-[2.2]" />
+              )}
+            </button>
+          </div>
         </div>
-      </div>
+      </header>
 
-      {/* ========================================================================= */}
-      {/* PERFECTLY FITTING TOP POPUP VIEW / MOBILE DRAWER MENU FOR ALL SCREEN SIZES */}
-      {/* ========================================================================= */}
+      {/* Top Pop-Up View / Mobile Navigation Modal */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-x-0 top-full bg-[#EFEFE8] dark:bg-[#181C16] border-b border-[#D8D8CF] dark:border-[#2E3729] shadow-2xl max-h-[calc(100vh-60px)] overflow-y-auto">
-          {/* Backdrop blur dismissal container */}
-          <div className="max-w-md mx-auto px-4 py-5 sm:px-6 sm:py-6 flex flex-col gap-4">
-            {/* Studio Identity Header */}
-            <div className="flex items-center justify-between pb-3 border-b border-[#D8D8CF] dark:border-[#2E3729]">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Navigation Menu"
+          className="md:hidden fixed inset-0 z-50 flex flex-col bg-black/60 transition-opacity"
+          onClick={() => setMobileMenuOpen(false)}
+        >
+          <div
+            className={`w-full max-h-[92vh] overflow-y-auto border-b shadow-2xl px-5 pt-4 pb-8 flex flex-col gap-4 animate-in slide-in-from-top-4 duration-200 ${
+              isDark
+                ? 'bg-[#121513] border-white/15 text-[#F7F7F2]'
+                : 'bg-[#F9F9F6] border-[#2C3528]/15 text-[#1E2520]'
+            }`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Top Bar inside Pop-up View */}
+            <div className="flex items-center justify-between pb-3 border-b border-black/10 dark:border-white/10">
               <ChandralokLogo size="sm" showHindi={true} showSubtitle={true} />
               <button
+                type="button"
                 onClick={() => setMobileMenuOpen(false)}
-                className="p-1.5 rounded-full hover:bg-stone-200 dark:hover:bg-stone-800 text-[#5C6755] dark:text-[#A3AFA0]"
+                className={`p-2 rounded-full border cursor-pointer ${
+                  isDark
+                    ? 'bg-white/10 border-white/15 text-white hover:text-[#C5A880]'
+                    : 'bg-black/5 border-black/10 text-black hover:text-[#B08D57]'
+                }`}
+                aria-label="Close navigation popup"
               >
-                <X className="w-4 h-4" />
+                <X className="w-5 h-5" />
               </button>
             </div>
 
-            {/* Quick Tagline */}
-            <p className="text-[11px] text-center font-medium text-[#5C6755] dark:text-[#A3AFA0]">
-              Photographer & Videographer Studio · Sirsaganj (Since 1981)
-            </p>
-
-            {/* Navigation Grid (Touch-friendly 2-column tiles) */}
-            <div className="grid grid-cols-2 gap-2">
-              {navLinks.map((link) => (
-                <button
-                  key={link.name}
-                  onClick={() => handleMobileNavClick(link.href)}
-                  className="py-2.5 px-3 text-[11px] font-bold tracking-wider uppercase text-[#3B4436] dark:text-[#EFEFE8] hover:text-[#B08D57] bg-white dark:bg-[#20251E] border border-[#D8D8CF] dark:border-[#2E3729] rounded-xl transition-colors text-center cursor-pointer active:scale-95 shadow-2xs"
-                >
-                  {link.name}
-                </button>
-              ))}
-            </div>
-
-            {/* Primary Action: Full-Width Tan Leather 'Book Now' */}
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenBooking();
-              }}
-              className="w-full py-3 text-xs tracking-widest uppercase font-bold text-white bg-[#B08D57] hover:bg-[#9c7b49] active:scale-95 transition-colors shadow-xs rounded-full cursor-pointer flex items-center justify-center gap-2"
+            {/* DEDICATED DARK & LIGHT MODE TOGGLE BUTTON ON TOP POP UP VIEW */}
+            <div
+              className={`p-3 rounded-2xl border flex items-center justify-between ${
+                isDark ? 'bg-[#181C19] border-white/10' : 'bg-[#EFEFEA] border-[#2C3528]/15'
+              }`}
             >
-              <Calendar className="w-3.5 h-3.5" />
-              <span>Book Now / Check Dates</span>
-            </button>
+              <div className="flex items-center gap-2.5">
+                {isDark ? (
+                  <Moon className="w-4 h-4 text-[#C5A880]" />
+                ) : (
+                  <Sun className="w-4 h-4 text-amber-500" />
+                )}
+                <div>
+                  <div className="text-xs font-bold uppercase tracking-wider">
+                    {isDark ? 'Dark Cinema Mode' : 'Light Gallery Mode'}
+                  </div>
+                  <div className={`text-[10px] ${isDark ? 'text-[#A3ABA1]' : 'text-[#576356]'}`}>
+                    Tap button to switch background theme
+                  </div>
+                </div>
+              </div>
 
-            {/* Side-by-Side Dual Action: Direct Call & Daylight/Darkroom Theme Toggle */}
-            <div className="grid grid-cols-2 gap-2 pt-1">
-              <a
-                href={`tel:${STUDIO_INFO.phone}`}
-                className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-full bg-white dark:bg-[#20251E] border border-[#D8D8CF] dark:border-[#2E3729] text-xs font-semibold text-[#3B4436] dark:text-[#EFEFE8] hover:border-[#B08D57] transition-colors"
-              >
-                <Phone className="w-3.5 h-3.5 text-[#B08D57]" />
-                <span className="truncate">Call Studio</span>
-              </a>
-
+              {/* Toggle Action Button */}
               <button
                 onClick={toggleTheme}
-                className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-full bg-white dark:bg-[#20251E] border border-[#D8D8CF] dark:border-[#2E3729] text-xs font-semibold text-[#3B4436] dark:text-[#EFEFE8] hover:border-[#B08D57] transition-colors cursor-pointer"
+                type="button"
+                className={`px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs ${
+                  isDark
+                    ? 'bg-[#C5A880] text-[#0D0F0E] hover:bg-[#B3956D]'
+                    : 'bg-[#B08D57] text-[#FFFFFF] hover:bg-[#967442]'
+                }`}
               >
                 {isDark ? (
                   <>
-                    <Sun className="w-3.5 h-3.5 text-[#B08D57]" />
-                    <span>Daylight</span>
+                    <Sun className="w-3.5 h-3.5" />
+                    <span>Set Light</span>
                   </>
                 ) : (
                   <>
-                    <Moon className="w-3.5 h-3.5 text-[#3B4436]" />
-                    <span>Darkroom</span>
+                    <Moon className="w-3.5 h-3.5" />
+                    <span>Set Dark</span>
                   </>
                 )}
               </button>
             </div>
 
-            {/* Address Footer inside popup */}
-            <div className="pt-2 text-center text-[10px] text-[#5C6755] dark:text-[#A3AFA0]">
-              Etawah Road, near Punjab National Bank, Sirsaganj, UP
+            {/* Navigation links */}
+            <nav className="flex flex-col gap-2 pt-1">
+              {navLinks.map((link) => (
+                <button
+                  key={link.name}
+                  type="button"
+                  onClick={() => handleNavClick(link.href)}
+                  className={`py-3 px-4 text-left text-xs tracking-[0.2em] font-bold uppercase rounded-xl transition-colors flex items-center justify-between cursor-pointer border ${
+                    isDark
+                      ? 'text-[#F7F7F2] hover:text-[#C5A880] bg-[#161917] hover:bg-[#1E221F] border-white/5'
+                      : 'text-[#1E2520] hover:text-[#B08D57] bg-[#FFFFFF] hover:bg-[#F2F2EC] border-[#2C3528]/10 shadow-xs'
+                  }`}
+                >
+                  <span>{link.name}</span>
+                  <ArrowRight
+                    className={`w-3.5 h-3.5 ${isDark ? 'text-[#C5A880]' : 'text-[#B08D57]'}`}
+                  />
+                </button>
+              ))}
+            </nav>
+
+            {/* Bottom Actions inside Pop-up View */}
+            <div className="pt-2 flex flex-col gap-2.5">
+              <button
+                type="button"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenBooking();
+                }}
+                className={`w-full py-3.5 text-xs tracking-[0.2em] uppercase font-bold rounded-full transition-colors cursor-pointer flex items-center justify-center gap-2 shadow-md ${
+                  isDark
+                    ? 'text-[#0D0F0E] bg-[#C5A880] hover:bg-[#B3956D]'
+                    : 'text-[#FFFFFF] bg-[#B08D57] hover:bg-[#967442]'
+                }`}
+              >
+                <Calendar className="w-4 h-4" />
+                <span>Check Your Date</span>
+              </button>
+
+              <a
+                href={`https://wa.me/${STUDIO_INFO.whatsappNumber}?text=Hello%20Chandralok%20Studio%2C%20I%20would%20like%20to%20check%20availability%20for%20our%20wedding.`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`w-full py-3 text-xs tracking-[0.16em] uppercase font-semibold rounded-full transition-colors flex items-center justify-center gap-2 border ${
+                  isDark
+                    ? 'text-[#F7F7F2] bg-[#161917] hover:bg-[#1F2420] border-white/10'
+                    : 'text-[#1E2520] bg-[#FFFFFF] hover:bg-[#F2F2EC] border-[#2C3528]/15'
+                }`}
+              >
+                <MessageCircle className="w-4 h-4 text-emerald-500" />
+                <span>WhatsApp Studio (+91 99976 48550)</span>
+              </a>
             </div>
           </div>
         </div>
       )}
-    </header>
+    </>
   );
 };

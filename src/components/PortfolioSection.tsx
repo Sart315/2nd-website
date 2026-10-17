@@ -1,128 +1,251 @@
 import React, { useState } from 'react';
-import { X, ZoomIn, MapPin, Calendar, Camera, Film, ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowUpRight, Camera, Filter } from 'lucide-react';
 import { PORTFOLIO_STORIES, PortfolioItem } from '../data/studioData';
+import { handleImageFallback, getImageUrl } from '../utils/assetImages';
+import { LightboxModal } from './LightboxModal';
+import { useTheme } from '../context/ThemeContext';
 
 interface PortfolioSectionProps {
-  onBookSimilar: (storyTitle: string) => void;
+  onReserve: (title: string) => void;
 }
 
-export const PortfolioSection: React.FC<PortfolioSectionProps> = ({ onBookSimilar }) => {
-  const [filter, setFilter] = useState<'all' | 'weddings' | 'pre-weddings' | 'portraits' | 'events' | 'films'>('all');
-  const [selectedStory, setSelectedStory] = useState<PortfolioItem | null>(null);
+export const PortfolioSection: React.FC<PortfolioSectionProps> = ({ onReserve }) => {
+  const [activeCategory, setActiveCategory] = useState<string>('ALL');
+  const [selectedItem, setSelectedItem] = useState<PortfolioItem | null>(null);
+  const { isDark } = useTheme();
+
+  // Normalizing portfolio items with correct resilient image URLs
+  const portfolioItems: PortfolioItem[] = [
+    {
+      id: 'port-1',
+      title: 'Royal Courtyard Union',
+      category: 'weddings',
+      categoryLabel: 'Royal Wedding',
+      image: getImageUrl('hero_cinematic_couple_1791896401138.jpg'),
+      location: 'Heritage Palace Courtyard, UP',
+      year: '2024',
+      aspect: 'wide',
+      story: 'A majestic golden-hour ceremony framed by sandstone jharokhas and rose petal pathways, immortalizing the poise and timeless bond of the couple.',
+      specs: '35mm Cine Prime · Natural Golden Hour · 14-Stop Dynamic Range',
+    },
+    {
+      id: 'port-2',
+      title: 'The Regal Crimson Bride',
+      category: 'weddings',
+      categoryLabel: 'Bridal Portrait',
+      image: getImageUrl('royal_bridal_portrait_1791898990033.jpg'),
+      location: 'Sirsaganj Heritage Shoot',
+      year: '2024',
+      aspect: 'portrait',
+      story: 'Intricate crimson zardozi work and royal heritage kundan jewelry illuminated with diffused studio softboxes and prime portrait optics.',
+      specs: '85mm f/1.2 L · Studio Softbox · 45MP Fine Art Detail',
+    },
+    {
+      id: 'port-3',
+      title: 'Pavilion Sunset Whisper',
+      category: 'pre-weddings',
+      categoryLabel: 'Pre-Wedding Story',
+      image: getImageUrl('prewedding_cinematic_1791896401895.jpg'),
+      location: 'Chhatri Pavilion, Agra Valley',
+      year: '2024',
+      aspect: 'landscape',
+      story: 'Windswept veil and sun-drenched arches. A quiet romantic narrative celebrating the promise of a lifetime against classical heritage architecture.',
+      specs: '85mm Portrait Prime · Golden Rim Backlight · 4K 60fps',
+    },
+    {
+      id: 'port-4',
+      title: 'Anamorphic Evening Vows',
+      category: 'films',
+      categoryLabel: 'Cinematic Films',
+      image: getImageUrl('cinematic_film_still_1791896403634.jpg'),
+      location: 'Grand Heritage Courtyard',
+      year: '2024',
+      aspect: 'wide',
+      story: 'A widescreen 2.39:1 anamorphic still evoking classic Indian cinema romance, where glowing candelabras and deep gazes carry the story forward.',
+      specs: 'Anamorphic 2.39:1 · 35mm T2.0 · Filmic Warm Grade',
+    },
+    {
+      id: 'port-5',
+      title: 'Sangeet Under Thousand Lights',
+      category: 'events',
+      categoryLabel: 'Events & Festivities',
+      image: getImageUrl('sangeet_celebration_lights_1791898991004.jpg'),
+      location: 'Grand Banquet, Sirsaganj',
+      year: '2024',
+      aspect: 'landscape',
+      story: 'Dynamic sangeet night captured with prime cinema glass, preserving real joy, dancing rhythm, and golden fairy-light bokeh.',
+      specs: '35mm T1.5 Cine · High Speed Shutter · 4K 120fps',
+    },
+    {
+      id: 'port-6',
+      title: 'The Sacred Varmala & Diya Glow',
+      category: 'weddings',
+      categoryLabel: 'Ceremony Moments',
+      image: getImageUrl('wedding_story_varmala_1791896401614.jpg'),
+      location: 'Sirsaganj Evening Celebration',
+      year: '2024',
+      aspect: 'landscape',
+      story: 'An unforgettable burst of joy under an archway of marigolds and thousands of warm oil diyas, capturing unscripted laughter between vows.',
+      specs: '50mm f/1.2 Lens · Ambient Diya Illumination · Candid Capture',
+    },
+  ];
 
   const categories = [
-    { id: 'all', label: 'All Works' },
-    { id: 'weddings', label: 'Weddings' },
-    { id: 'pre-weddings', label: 'Pre-Weddings' },
-    { id: 'portraits', label: 'Portraits' },
-    { id: 'events', label: 'Events' },
-    { id: 'films', label: 'Films' },
-  ] as const;
+    { key: 'ALL', label: 'All Works' },
+    { key: 'weddings', label: 'Weddings' },
+    { key: 'pre-weddings', label: 'Pre-Weddings' },
+    { key: 'events', label: 'Events' },
+    { key: 'films', label: 'Cinematic Films' },
+  ];
 
-  const filteredStories = filter === 'all'
-    ? PORTFOLIO_STORIES
-    : PORTFOLIO_STORIES.filter((s) => s.category === filter);
+  const filteredItems = portfolioItems.filter(
+    (item) => activeCategory === 'ALL' || item.category === activeCategory
+  );
+
+  const handleNext = () => {
+    if (!selectedItem) return;
+    const currentIndex = filteredItems.findIndex((it) => it.id === selectedItem.id);
+    const nextIndex = (currentIndex + 1) % filteredItems.length;
+    setSelectedItem(filteredItems[nextIndex]);
+  };
+
+  const handlePrev = () => {
+    if (!selectedItem) return;
+    const currentIndex = filteredItems.findIndex((it) => it.id === selectedItem.id);
+    const prevIndex = (currentIndex - 1 + filteredItems.length) % filteredItems.length;
+    setSelectedItem(filteredItems[prevIndex]);
+  };
 
   return (
-    <section id="stories" className="py-24 bg-[#050b14] border-t border-[#00e5ff]/20 relative film-grain">
-      <div className="max-w-7xl mx-auto px-4 sm:px-8">
-        {/* Section Header with Category Filter Controls */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-8">
+    <section
+      id="portfolio"
+      className={`py-20 sm:py-28 transition-colors duration-200 ${
+        isDark ? 'bg-[#0D0F0E] text-[#F7F7F2]' : 'bg-[#F9F9F6] text-[#1E2520]'
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Editorial Section Header */}
+        <div
+          className={`flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-14 pb-5 border-b gap-6 ${
+            isDark ? 'border-white/10' : 'border-[#2C3528]/15'
+          }`}
+        >
           <div>
-            <div className="inline-flex items-center gap-2 text-xs tracking-[0.28em] uppercase text-[#00e5ff] mb-3 font-semibold">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>PORTFOLIO ARCHIVE</span>
+            <div
+              className={`inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.25em] uppercase mb-2.5 ${
+                isDark ? 'text-[#C5A880]' : 'text-[#B08D57]'
+              }`}
+            >
+              <Camera className="w-3.5 h-3.5" />
+              <span>Selected Works & Archives</span>
             </div>
-            <h2 className="font-display text-4xl sm:text-5xl font-extrabold uppercase text-white leading-tight [text-wrap:balance]">
-              SELECTED <br />
-              <span className="bg-gradient-to-r from-[#00e5ff] via-[#ffb703] to-[#ff6b00] bg-clip-text text-transparent">
-                STORIES
-              </span>.
+            <h2 className="font-heading text-3xl sm:text-5xl lg:text-6xl font-normal tracking-tight uppercase">
+              Our Portfolio
             </h2>
           </div>
 
-          {/* Interactive Filter Controls with Curved Glassy Pills */}
-          <div className="flex flex-wrap items-center gap-2 p-1.5 bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-full">
-            {categories.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setFilter(cat.id)}
-                className={`px-4 py-2 text-xs font-mono uppercase tracking-wider transition-all duration-200 rounded-full whitespace-nowrap shrink-0 cursor-pointer ${
-                  filter === cat.id
-                    ? 'bg-gradient-to-r from-[#00e5ff] to-[#38bdf8] text-[#050b14] font-bold shadow-[0_0_15px_rgba(0,229,255,0.4)]'
-                    : 'text-[#cbd5e1] hover:text-white hover:bg-white/[0.05]'
-                }`}
-              >
-                {cat.label}
-              </button>
-            ))}
+          {/* Minimal Category Tabs */}
+          <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
+            {categories.map((cat) => {
+              const isActive = activeCategory === cat.key;
+              return (
+                <button
+                  key={cat.key}
+                  type="button"
+                  onClick={() => setActiveCategory(cat.key)}
+                  className={`px-4 py-2 rounded-full text-xs font-semibold tracking-wider uppercase transition-all duration-150 cursor-pointer ${
+                    isActive
+                      ? isDark
+                        ? 'bg-[#C5A880] text-[#0D0F0E] shadow-xs'
+                        : 'bg-[#B08D57] text-[#FFFFFF] shadow-xs'
+                      : isDark
+                      ? 'bg-white/5 hover:bg-white/10 text-white/75 hover:text-white border border-white/10'
+                      : 'bg-black/5 hover:bg-black/10 text-[#1E2520]/80 hover:text-[#1E2520] border border-[#2C3528]/10'
+                  }`}
+                >
+                  {cat.label}
+                </button>
+              );
+            })}
           </div>
         </div>
 
-        {/* Asymmetric Editorial Portfolio Grid with Curved Glassy Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
-          {filteredStories.map((story, index) => {
-            let colSpan = 'lg:col-span-6';
-            if (index === 0) colSpan = 'lg:col-span-8';
-            else if (index === 1) colSpan = 'lg:col-span-4';
-            else if (index === 2) colSpan = 'lg:col-span-4';
-            else if (index === 3) colSpan = 'lg:col-span-8';
-            else if (index === 4) colSpan = 'lg:col-span-6';
-            else if (index === 5) colSpan = 'lg:col-span-6';
+        {/* Asymmetrical Editorial Masonry Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6">
+          {filteredItems.map((item, idx) => {
+            let colSpan = 'md:col-span-6';
+            let aspectClass = 'aspect-[16/10]';
+
+            if (idx === 0) {
+              colSpan = 'md:col-span-8';
+              aspectClass = 'aspect-[16/10] sm:aspect-[16/9]';
+            } else if (idx === 1) {
+              colSpan = 'md:col-span-4';
+              aspectClass = 'aspect-[3/4]';
+            } else if (idx === 2) {
+              colSpan = 'md:col-span-5';
+              aspectClass = 'aspect-[4/3]';
+            } else if (idx === 3) {
+              colSpan = 'md:col-span-7';
+              aspectClass = 'aspect-[16/9]';
+            }
 
             return (
               <div
-                key={story.id}
-                className={`${colSpan} group cursor-pointer relative bg-white/[0.03] backdrop-blur-xl border border-white/10 hover:border-white/30 rounded-2xl overflow-hidden transition-all duration-500 shadow-[0_8px_30px_rgba(0,0,0,0.5)] hover:-translate-y-1`}
-                onClick={() => setSelectedStory(story)}
+                key={item.id}
+                onClick={() => setSelectedItem(item)}
+                className={`portfolio-card group relative ${colSpan} rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer shadow-lg border ${
+                  isDark ? 'bg-[#161917] border-white/10' : 'bg-white border-[#2C3528]/15'
+                }`}
               >
-                {/* Image Container with Zoom */}
-                <div className="relative aspect-[16/10] overflow-hidden bg-[#070f1e]">
+                <div className={`relative w-full ${aspectClass} overflow-hidden`}>
+                  {/* Image */}
                   <img
-                    src={story.image}
-                    alt={story.title}
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    src={item.image}
+                    alt={item.title}
+                    onError={handleImageFallback}
+                    loading="lazy"
+                    decoding="async"
+                    className="portfolio-img w-full h-full object-cover object-center transition-transform duration-500 ease-out"
                   />
 
-                  {/* Contrast Scrim */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#050b14] via-[#050b14]/30 to-transparent opacity-85 group-hover:opacity-65 transition-opacity" />
+                  {/* Base subtle dark bottom vignette */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent opacity-85 group-hover:opacity-30 transition-opacity duration-200" />
 
-                  {/* Zoom Icon */}
-                  <div className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/70 backdrop-blur-md border border-white/20 flex items-center justify-center text-[#00e5ff] opacity-0 group-hover:opacity-100 transition-opacity">
-                    <ZoomIn className="w-4 h-4" />
-                  </div>
+                  {/* Dark Translucent Hover Overlay Layer */}
+                  <div className="portfolio-overlay absolute inset-0 bg-black/80 opacity-0 flex flex-col justify-between p-6 sm:p-8">
+                    {/* Top Tag */}
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] tracking-[0.25em] font-bold uppercase px-3 py-1 rounded-full bg-white/15 text-[#C5A880] border border-white/20">
+                        {item.categoryLabel}
+                      </span>
+                      <span className="text-xs font-mono text-white/70">{item.year}</span>
+                    </div>
 
-                  {/* Category Pill Tag */}
-                  <div className="absolute top-4 left-4 flex items-center gap-2 text-[10px] font-mono tracking-wider uppercase text-white bg-black/60 backdrop-blur-md px-3 py-1 border border-white/15 rounded-full">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#00e5ff]" />
-                    <span>{story.categoryLabel}</span>
-                  </div>
-
-                  {/* Overlay Title & Location */}
-                  <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
+                    {/* Bottom Story & View Link */}
                     <div>
-                      <div className="text-xs text-[#ffb703] font-mono flex items-center gap-1.5 mb-1">
-                        <MapPin className="w-3 h-3 text-[#ff6b00]" />
-                        <span>{story.location}</span>
-                        <span>·</span>
-                        <span>{story.year}</span>
-                      </div>
-                      <h3 className="font-display text-xl sm:text-2xl font-bold uppercase text-white group-hover:text-[#00e5ff] transition-colors leading-tight">
-                        {story.title}
+                      <h3 className="font-heading text-xl sm:text-2xl lg:text-3xl font-normal text-white mb-2 leading-tight">
+                        {item.title}
                       </h3>
+                      <p className="text-xs text-white/80 line-clamp-2 mb-3 leading-relaxed font-body">
+                        {item.story}
+                      </p>
+                      <div className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-[#C5A880] group-hover:text-white transition-colors">
+                        <span>View Story</span>
+                        <ArrowUpRight className="w-4 h-4" />
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Technical Caption Below Image */}
-                <div className="p-4 bg-[#06101f] border-t border-[#1e293b] flex items-center justify-between text-xs text-[#cbd5e1]">
-                  <span className="font-light truncate max-w-[80%] font-mono text-[11px] text-[#94a3b8]">
-                    {story.specs}
-                  </span>
-                  <span className="text-[#00e5ff] font-bold text-xs flex items-center gap-1 shrink-0 group-hover:translate-x-1 transition-transform">
-                    View Story <ArrowRight className="w-3.5 h-3.5" />
-                  </span>
+                  {/* Static card footer visible when not hovered */}
+                  <div className="absolute bottom-4 left-4 right-4 group-hover:opacity-0 transition-opacity duration-150">
+                    <span className="text-[10px] tracking-widest uppercase font-semibold text-[#C5A880] block mb-0.5">
+                      {item.categoryLabel}
+                    </span>
+                    <h3 className="font-heading text-lg sm:text-xl text-white font-normal truncate">
+                      {item.title}
+                    </h3>
+                  </div>
                 </div>
               </div>
             );
@@ -131,77 +254,13 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({ onBookSimila
       </div>
 
       {/* Lightbox Modal */}
-      {selectedStory && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-2xl p-4 sm:p-6 animate-in fade-in duration-200"
-          onClick={() => setSelectedStory(null)}
-        >
-          <div
-            className="relative w-full max-w-5xl bg-[#091526] border border-[#00e5ff]/50 shadow-2xl overflow-hidden max-h-[92vh] flex flex-col rounded-xs"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Modal Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-[#1e293b] bg-[#070f1e]">
-              <div className="flex items-center gap-3 text-xs font-mono uppercase text-[#00e5ff]">
-                <span>{selectedStory.categoryLabel}</span>
-                <span className="text-white/30">/</span>
-                <span className="text-[#ffb703]">{selectedStory.year}</span>
-              </div>
-              <button
-                onClick={() => setSelectedStory(null)}
-                className="p-1.5 text-[#94a3b8] hover:text-white rounded-full transition-colors"
-                aria-label="Close"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            {/* Modal Image Area */}
-            <div className="relative overflow-hidden bg-black flex items-center justify-center max-h-[58vh]">
-              <img
-                src={selectedStory.image}
-                alt={selectedStory.title}
-                referrerPolicy="no-referrer"
-                className="max-h-[58vh] w-auto max-w-full object-contain"
-              />
-            </div>
-
-            {/* Modal Story Details */}
-            <div className="p-6 sm:p-8 bg-[#091526] overflow-y-auto">
-              <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-4">
-                <div>
-                  <h3 className="font-display text-2xl sm:text-3xl uppercase font-bold text-white mb-1">
-                    {selectedStory.title}
-                  </h3>
-                  <div className="flex items-center gap-4 text-xs font-mono text-[#ffb703]">
-                    <span className="flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-[#ff6b00]" />
-                      {selectedStory.location}
-                    </span>
-                    <span>·</span>
-                    <span className="text-[#00e5ff]">{selectedStory.specs}</span>
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => {
-                    const title = selectedStory.title;
-                    setSelectedStory(null);
-                    onBookSimilar(title);
-                  }}
-                  className="px-6 py-3 text-xs font-bold tracking-widest uppercase text-[#050b14] bg-[#00e5ff] hover:bg-[#ff6b00] hover:text-white transition-all rounded-xs whitespace-nowrap self-start"
-                >
-                  Book Similar Shoot
-                </button>
-              </div>
-
-              <p className="text-sm text-[#cbd5e1] font-light leading-relaxed max-w-3xl">
-                {selectedStory.story}
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
+      <LightboxModal
+        item={selectedItem}
+        onClose={() => setSelectedItem(null)}
+        onNext={handleNext}
+        onPrev={handlePrev}
+        onReserve={onReserve}
+      />
     </section>
   );
 };

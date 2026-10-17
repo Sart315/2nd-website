@@ -284,16 +284,16 @@ export const BRAND_CAMERAS: EquipmentItem[] = [
     accent: "#ea580c"
   },
   {
-    id: "cam-nikon-z8",
-    category: "NIKON Z SYSTEM",
-    name: "Nikon Z8 Flagship & Nikkor Z 85mm f/1.2 S",
-    brand: "Nikon Z",
-    model: "Nikon Z8 45.7MP Stacked CMOS Mirrorless",
-    image: getImageUrl("nikon_z8_flagship_lens_1792051669062.jpg"),
-    specs: "45.7MP Stacked Sensor · 8.3K 60p N-RAW · 12-Bit Internal RAW · Real-Time Subject Detection",
-    purpose: "Precision documentary flagship delivering rich micro-contrast, accurate ritual jewelry reflections, and lifelike skin tones under mixed mandap lighting.",
-    type: "Full-Frame Flagship Mirrorless",
-    accent: "#ffb703"
+    id: "cam-wedding-table-flashes",
+    category: "WEDDING CINEMA SUITE",
+    name: "Wedding Shoot Equipment Suite & Dual Strobe Flashes",
+    brand: "Professional Studio Rig",
+    model: "Complete Wedding Production Station with Dual Softbox Flash Lights",
+    image: getImageUrl("wedding_equipment_table_flashes_1792253412864.jpg"),
+    specs: "Cinema Bodies · Prime Portrait Glass · Dual Strobe Softboxes on Stands · Gimbal & Mic Packs",
+    purpose: "Dedicated master workstation arranged with professional wedding shoot gear, backed by dual strobe flash lighting for crystal-clear bridal portraits and grand mandap coverage.",
+    type: "Wedding Production Gear Station",
+    accent: "#B08D57"
   },
   {
     id: "cam-fujifilm-gfx",

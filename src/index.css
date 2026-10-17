@@ -4,62 +4,100 @@
 
 @layer base {
   :root {
-    /* Exact Design Tokens */
-    --color-bone-white: #EFEFE8;
-    --color-moss-green: #3B4436;
-    --color-tan-leather: #B08D57;
-    --color-tan-leather-hover: #9c7b49;
+    /* Luxury Darkroom Editorial Default (Dark Mode) */
+    --color-canvas: #0D0F0E;
+    --color-surface: #161917;
+    --color-surface-elevated: #1F2420;
+    --color-border: rgba(255, 255, 255, 0.10);
+    --color-border-subtle: rgba(255, 255, 255, 0.06);
+    --color-border-accent: rgba(197, 168, 128, 0.35);
 
-    /* Bold & Simple Classic Typography Hierarchy */
-    --font-heading: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    --font-title: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    /* Typography Palette */
+    --color-ivory: #F7F7F2;
+    --color-muted: #A3ABA1;
+    --color-champagne: #C5A880;
+    --color-champagne-hover: #B3956D;
+
+    /* Typographic Hierarchy */
+    --font-heading: "Playfair Display", "Cinzel", Georgia, serif;
+    --font-display: "Cinzel", Georgia, serif;
+    --font-title: "Montserrat", -apple-system, BlinkMacSystemFont, sans-serif;
     --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --font-hindi: "Noto Sans Devanagari", sans-serif;
-    --font-serif: "Playfair Display", Georgia, serif;
 
-    /* Light Theme (60% Bone White, 30% Moss Green, 10% Tan Leather) */
-    --theme-bg: #EFEFE8;
-    --theme-surface: #F7F7F2;
-    --theme-card: #FFFFFF;
-    --theme-border: #D8D8CF;
-    --theme-border-subtle: #E4E4DC;
-    --theme-text: #3B4436;
-    --theme-muted: #5C6755;
-    --theme-accent: #B08D57;
+    /* Semantic Theme Bindings */
+    --theme-bg: #0D0F0E;
+    --theme-surface: #161917;
+    --theme-surface-alt: #121513;
+    --theme-card: #181C19;
+    --theme-border: rgba(255, 255, 255, 0.10);
+    --theme-text: #F7F7F2;
+    --theme-muted: #A3ABA1;
+    --theme-accent: #C5A880;
+    --theme-accent-hover: #B3956D;
+    --theme-header-bg: rgba(13, 15, 14, 0.94);
   }
 
-  /* Coordinated Darkroom Cinema Mode */
-  html.dark {
-    --theme-bg: #181C16;
-    --theme-surface: #20251E;
-    --theme-card: #232A20;
-    --theme-border: #2E3729;
-    --theme-border-subtle: #272F23;
-    --theme-text: #EFEFE8;
-    --theme-muted: #A3AFA0;
-    --theme-accent: #C7A269;
+  html.light, [data-theme="light"] {
+    /* Crisp Bone White Editorial Palette (Light Mode) */
+    --color-canvas: #F9F9F6;
+    --color-surface: #FFFFFF;
+    --color-surface-elevated: #F2F2EC;
+    --color-border: rgba(44, 53, 40, 0.12);
+    --color-border-subtle: rgba(44, 53, 40, 0.08);
+    --color-border-accent: rgba(176, 141, 87, 0.40);
+
+    /* Typography Palette */
+    --color-ivory: #1E2520;
+    --color-muted: #576356;
+    --color-champagne: #B08D57;
+    --color-champagne-hover: #967442;
+
+    /* Semantic Theme Bindings */
+    --theme-bg: #F9F9F6;
+    --theme-surface: #FFFFFF;
+    --theme-surface-alt: #F3F3ED;
+    --theme-card: #FFFFFF;
+    --theme-border: rgba(44, 53, 40, 0.12);
+    --theme-text: #1E2520;
+    --theme-muted: #576356;
+    --theme-accent: #B08D57;
+    --theme-accent-hover: #967442;
+    --theme-header-bg: rgba(249, 249, 246, 0.96);
   }
 
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto; /* Instant native 60fps scrolling without artificial deceleration lag */
     -webkit-tap-highlight-color: transparent;
     overflow-x: hidden;
+    background-color: var(--theme-bg);
+    color: var(--theme-text);
   }
 
   body {
     font-family: var(--font-body);
     background-color: var(--theme-bg);
     color: var(--theme-text);
-    transition: background-color 0.2s ease, color 0.2s ease;
     overflow-x: hidden;
     width: 100%;
     margin: 0;
     padding: 0;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  h1, h2, h3, h4, .font-heading, .font-title, .font-display {
+  h1, h2, h3, h4, .font-heading {
     font-family: var(--font-heading);
     letter-spacing: -0.01em;
+  }
+
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  .font-title {
+    font-family: var(--font-title);
   }
 
   .font-body {
@@ -69,113 +107,55 @@
   .font-hindi {
     font-family: var(--font-hindi);
   }
-
-  .font-serif-classic {
-    font-family: var(--font-serif);
-  }
 }
 
 * {
   box-sizing: border-box;
 }
 
-/* Atmospheric Moss Green Smoke Canvas (Soft, organic studio haze mist blending with Bone White) */
-.moss-smoke-canvas {
-  background-color: #EFEFE8;
-  background-image: 
-    radial-gradient(ellipse 65% 50% at 12% 15%, rgba(59, 68, 54, 0.08) 0%, rgba(59, 68, 54, 0.03) 40%, transparent 70%),
-    radial-gradient(ellipse 60% 55% at 88% 28%, rgba(59, 68, 54, 0.07) 0%, rgba(59, 68, 54, 0.02) 45%, transparent 75%),
-    radial-gradient(ellipse 75% 60% at 35% 68%, rgba(59, 68, 54, 0.07) 0%, rgba(59, 68, 54, 0.02) 45%, transparent 75%),
-    radial-gradient(ellipse 60% 50% at 80% 88%, rgba(59, 68, 54, 0.06) 0%, rgba(59, 68, 54, 0.02) 40%, transparent 70%),
-    radial-gradient(ellipse 45% 40% at 50% 48%, rgba(176, 141, 87, 0.04) 0%, transparent 60%);
-  background-attachment: fixed;
+/* Butter-Smooth Hardware Optimized Canvas (Zero Runtime Filter Blur) */
+.cinema-canvas {
+  background-color: var(--theme-bg);
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-html.dark .moss-smoke-canvas {
-  background-color: #181C16;
-  background-image: 
-    radial-gradient(ellipse 65% 50% at 12% 15%, rgba(59, 68, 54, 0.32) 0%, rgba(59, 68, 54, 0.12) 40%, transparent 70%),
-    radial-gradient(ellipse 60% 55% at 88% 28%, rgba(59, 68, 54, 0.28) 0%, rgba(59, 68, 54, 0.08) 45%, transparent 75%),
-    radial-gradient(ellipse 75% 60% at 35% 68%, rgba(59, 68, 54, 0.28) 0%, rgba(59, 68, 54, 0.09) 45%, transparent 75%),
-    radial-gradient(ellipse 60% 50% at 80% 88%, rgba(59, 68, 54, 0.24) 0%, rgba(59, 68, 54, 0.06) 40%, transparent 70%),
-    radial-gradient(ellipse 45% 40% at 50% 48%, rgba(199, 162, 105, 0.07) 0%, transparent 60%);
-  background-attachment: fixed;
-}
-
-/* Ultra-Smooth 60fps Hardware-Accelerated Smoke Movement (Zero Jank, Zero Heavy Filters) */
-@keyframes smokeDriftOne {
-  0% {
-    transform: translate3d(0, 0, 0);
-  }
-  50% {
-    transform: translate3d(18px, -24px, 0);
-  }
-  100% {
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-@keyframes smokeDriftTwo {
-  0% {
-    transform: translate3d(0, 0, 0);
-  }
-  50% {
-    transform: translate3d(-20px, 16px, 0);
-  }
-  100% {
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-.smoke-cloud-1 {
-  animation: smokeDriftOne 24s ease-in-out infinite;
-  will-change: transform;
-  backface-visibility: hidden;
-}
-
-.smoke-cloud-2 {
-  animation: smokeDriftTwo 30s ease-in-out infinite;
-  will-change: transform;
-  backface-visibility: hidden;
-}
-
-/* Minimalist Refined Scrollbar */
+/* Streamlined Minimalist Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
 
-html.dark ::-webkit-scrollbar-track {
-  background: #181C16;
+::-webkit-scrollbar-track {
+  background: var(--theme-bg);
 }
 
-html.dark ::-webkit-scrollbar-thumb {
-  background: #2E3729;
+::-webkit-scrollbar-thumb {
+  background: var(--theme-border);
   border-radius: 3px;
 }
 
-html.dark ::-webkit-scrollbar-thumb:hover {
-  background: #B08D57;
+::-webkit-scrollbar-thumb:hover {
+  background: var(--theme-accent);
 }
 
-html.light ::-webkit-scrollbar-track {
-  background: #EFEFE8;
+/* Zero Lag Hover Image Transitions */
+.portfolio-card:hover .portfolio-img {
+  transform: scale(1.03);
 }
 
-html.light ::-webkit-scrollbar-thumb {
-  background: #CFCFC5;
-  border-radius: 3px;
+.portfolio-card .portfolio-overlay {
+  transition: opacity 0.25s ease;
 }
 
-html.light ::-webkit-scrollbar-thumb:hover {
-  background: #B08D57;
+.portfolio-card:hover .portfolio-overlay {
+  opacity: 1;
 }
 
 /* Reduced Motion Override */
-html.reduced-motion *,
-html.reduced-motion *::before,
-html.reduced-motion *::after {
-  animation-duration: 0.001ms !important;
-  animation-iteration-count: 1 !important;
-  transition-duration: 0.001ms !important;
-  scroll-behavior: auto !important;
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
