@@ -11,11 +11,11 @@ export const AboutSection: React.FC = () => {
   return (
     <section
       id="about"
-      className={`py-20 sm:py-28 transition-colors duration-200 border-t border-b ${
+      className={`w-full max-w-full overflow-hidden py-20 sm:py-28 transition-colors duration-200 border-t border-b ${
         isDark ? 'bg-[#0A0C0B] text-[#F7F7F2] border-white/5' : 'bg-[#F2F2EC] text-[#1E2520] border-[#2C3528]/10'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-[1560px] mx-auto px-4 sm:px-8 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
           {/* Left Column: Authentic Wedding Shoot Equipment Table with Dual Strobe Flashes */}
           <div className="lg:col-span-5 relative">

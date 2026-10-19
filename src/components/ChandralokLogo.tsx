@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import officialLogoImg from '../assets/images/chandralok_official_logo.png';
+import { useTheme } from '../context/ThemeContext';
 
 interface ChandralokLogoProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
@@ -16,6 +17,7 @@ export const ChandralokLogo: React.FC<ChandralokLogoProps> = ({
   className = '',
   variant = 'full',
 }) => {
+  const { isDark } = useTheme();
   // Multi-tier fallback so logo NEVER fails when published or live
   const [attempt, setAttempt] = useState(0);
 
@@ -108,22 +110,30 @@ export const ChandralokLogo: React.FC<ChandralokLogoProps> = ({
         <div className="flex flex-col leading-tight min-w-0">
           <div className="flex items-center gap-1 min-w-0">
             <span
-              className={`font-title uppercase tracking-wider text-[#3B4436] dark:text-[#EFEFE8] truncate ${titleSize}`}
+              className={`font-title uppercase tracking-wider truncate ${titleSize} ${
+                isDark ? 'text-[#F7F7F2]' : 'text-[#1E2520]'
+              }`}
             >
-              CHANDRALOK <span className="text-[#B08D57]">STUDIO</span>
+              CHANDRALOK <span className={isDark ? 'text-[#C5A880]' : 'text-[#B08D57]'}>STUDIO</span>
             </span>
           </div>
 
           {showHindi && (
             <span
-              className={`font-hindi text-[#3B4436] dark:text-[#EFEFE8] tracking-wide mt-0.5 truncate hidden xs:block ${hindiSize}`}
+              className={`font-hindi tracking-wide mt-0.5 truncate hidden xs:block ${hindiSize} ${
+                isDark ? 'text-[#A3ABA1]' : 'text-[#576356]'
+              }`}
             >
               चन्द्रलोक फोटो स्टूडियो
             </span>
           )}
 
           {showSubtitle && (
-            <span className="text-[8px] sm:text-[9px] tracking-widest text-[#B08D57] uppercase font-bold mt-0.5 truncate hidden sm:block">
+            <span
+              className={`text-[8px] sm:text-[9px] tracking-widest uppercase font-bold mt-0.5 truncate hidden sm:block ${
+                isDark ? 'text-[#C5A880]' : 'text-[#B08D57]'
+              }`}
+            >
               ESTD. 1981 · SIRSAGANJ
             </span>
           )}

@@ -69,7 +69,12 @@
   html {
     scroll-behavior: auto; /* Instant native 60fps scrolling without artificial deceleration lag */
     -webkit-tap-highlight-color: transparent;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
     overflow-x: hidden;
+    overflow-x: clip;
     background-color: var(--theme-bg);
     color: var(--theme-text);
   }
@@ -78,13 +83,27 @@
     font-family: var(--font-body);
     background-color: var(--theme-bg);
     color: var(--theme-text);
-    overflow-x: hidden;
     width: 100%;
+    max-width: 100%;
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
+    overflow-x: clip;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  #root {
+    width: 100%;
+    max-width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-x: clip;
+    display: flex;
+    flex-direction: column;
   }
 
   h1, h2, h3, h4, .font-heading {

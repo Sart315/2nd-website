@@ -34,14 +34,14 @@ export default function App() {
 
   return (
     <div
-      className={`min-h-screen cinema-canvas ${
+      className={`min-h-screen w-full max-w-full overflow-x-hidden cinema-canvas ${
         isDark ? 'bg-[#0D0F0E] text-[#F7F7F2]' : 'bg-[#F9F9F6] text-[#1E2520]'
       } relative selection:bg-[#C5A880]/30 selection:text-[#F7F7F2] transition-colors duration-200`}
     >
       {/* 01. Minimal Top Navigation with CHECK YOUR DATE button & Dark/Light mode switch */}
       <Navbar onOpenBooking={() => scrollToBooking()} />
 
-      <main className="relative z-10">
+      <main className="relative z-10 w-full max-w-full overflow-x-hidden">
         {/* 01. Full-Screen Cinematic Hero */}
         <Hero
           onOpenBooking={() => scrollToBooking()}

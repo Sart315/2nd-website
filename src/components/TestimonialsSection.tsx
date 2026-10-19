@@ -11,11 +11,11 @@ export const TestimonialsSection: React.FC = () => {
   return (
     <section
       id="reviews"
-      className={`py-20 sm:py-28 transition-colors duration-200 ${
+      className={`w-full max-w-full overflow-hidden py-20 sm:py-28 transition-colors duration-200 ${
         isDark ? 'bg-[#0D0F0E] text-[#F7F7F2]' : 'bg-[#F9F9F6] text-[#1E2520]'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-[1560px] mx-auto px-4 sm:px-8 lg:px-12">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
           <div

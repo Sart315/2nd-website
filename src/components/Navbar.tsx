@@ -60,7 +60,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-40 transition-colors duration-200 ${
+        className={`fixed top-0 left-0 right-0 w-full z-40 transition-colors duration-200 overflow-x-hidden ${
           isScrolled
             ? isDark
               ? 'bg-[#0D0F0E]/95 border-b border-white/10 py-3 sm:py-3.5 shadow-lg'
@@ -70,7 +70,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
             : 'bg-gradient-to-b from-[#F9F9F6]/90 via-[#F9F9F6]/50 to-transparent py-4 sm:py-5 border-b border-[#2C3528]/10 text-[#1E2520]'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-2 sm:gap-3 w-full">
+        <div className="w-full max-w-[1560px] mx-auto px-3.5 sm:px-6 lg:px-12 flex items-center justify-between gap-1.5 sm:gap-3">
           {/* Brand Wordmark & Official Logo */}
           <a
             href="#hero"
@@ -78,7 +78,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
               e.preventDefault();
               handleNavClick('#hero');
             }}
-            className="flex items-center shrink min-w-0 max-w-[50vw] sm:max-w-none group cursor-pointer"
+            className="flex items-center shrink min-w-0 max-w-[42vw] xs:max-w-[48vw] sm:max-w-none group cursor-pointer"
             aria-label="Chandralok Studio Home"
           >
             <ChandralokLogo size="md" showHindi={true} showSubtitle={true} />
@@ -113,13 +113,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
           </nav>
 
           {/* Action Controls: Dark/Light Mode + CHECK YOUR DATE + Mobile 3-Lines */}
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
             {/* Header Dark & Light Mode Button */}
             <button
               onClick={toggleTheme}
               aria-label={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
               title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-              className={`p-2 sm:px-3 sm:py-2 rounded-full border transition-all flex items-center gap-1.5 cursor-pointer text-xs font-semibold ${
+              className={`p-1.5 sm:px-3 sm:py-2 rounded-full border transition-all flex items-center gap-1.5 cursor-pointer text-xs font-semibold ${
                 isDark
                   ? 'bg-white/10 hover:bg-white/15 border-white/15 text-[#C5A880]'
                   : 'bg-[#2C3528]/10 hover:bg-[#2C3528]/15 border-[#2C3528]/20 text-[#B08D57]'
@@ -141,7 +141,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
             {/* Check Your Date Button */}
             <button
               onClick={onOpenBooking}
-              className={`px-3 py-2 sm:px-5 sm:py-2.5 text-[10px] sm:text-xs font-bold tracking-[0.16em] uppercase active:scale-95 transition-all shadow-xs rounded-full flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
+              className={`px-2.5 py-1.5 sm:px-5 sm:py-2.5 text-[10px] sm:text-xs font-bold tracking-[0.16em] uppercase active:scale-95 transition-all shadow-xs rounded-full flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
                 isDark
                   ? 'text-[#0D0F0E] bg-[#C5A880] hover:bg-[#B3956D]'
                   : 'text-[#FFFFFF] bg-[#B08D57] hover:bg-[#967442]'
@@ -158,16 +158,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
               onClick={() => setMobileMenuOpen((prev) => !prev)}
               aria-expanded={mobileMenuOpen}
               aria-label={mobileMenuOpen ? 'Close Navigation Menu' : 'Open Navigation Menu'}
-              className={`md:hidden min-w-[40px] min-h-[40px] w-10 h-10 rounded-full border flex items-center justify-center cursor-pointer transition-colors z-50 ${
+              className={`md:hidden min-w-[36px] min-h-[36px] w-9 h-9 sm:w-10 sm:h-10 rounded-full border flex items-center justify-center cursor-pointer transition-colors z-50 ${
                 isDark
                   ? 'bg-white/10 hover:bg-white/15 border-white/15 text-white active:bg-white/20'
                   : 'bg-[#2C3528]/10 hover:bg-[#2C3528]/15 border-[#2C3528]/20 text-[#1E2520] active:bg-[#2C3528]/20'
               }`}
             >
               {mobileMenuOpen ? (
-                <X className={`w-5 h-5 ${isDark ? 'text-[#C5A880]' : 'text-[#B08D57]'}`} />
+                <X className={`w-4 h-4 sm:w-5 sm:h-5 ${isDark ? 'text-[#C5A880]' : 'text-[#B08D57]'}`} />
               ) : (
-                <Menu className="w-5 h-5 stroke-[2.2]" />
+                <Menu className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.2]" />
               )}
             </button>
           </div>

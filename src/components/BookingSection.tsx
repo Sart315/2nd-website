@@ -59,11 +59,11 @@ export const BookingSection: React.FC<BookingSectionProps> = ({ initialService }
   return (
     <section
       id="booking"
-      className={`py-20 sm:py-28 transition-colors duration-200 border-t ${
+      className={`w-full max-w-full overflow-hidden py-20 sm:py-28 transition-colors duration-200 border-t ${
         isDark ? 'bg-[#0A0C0B] text-[#F7F7F2] border-white/5' : 'bg-[#F2F2EC] text-[#1E2520] border-[#2C3528]/10'
       }`}
     >
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-5xl mx-auto px-4 sm:px-8 lg:px-12">
         {/* Editorial Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
           <div

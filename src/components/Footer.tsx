@@ -9,13 +9,13 @@ export const Footer: React.FC = () => {
 
   return (
     <footer
-      className={`border-t py-14 text-xs select-none transition-colors duration-200 ${
+      className={`w-full max-w-full overflow-hidden border-t py-14 text-xs select-none transition-colors duration-200 ${
         isDark
           ? 'bg-[#070807] border-white/10 text-[#A3ABA1]'
           : 'bg-[#EAEAE2] border-[#2C3528]/15 text-[#576356]'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-[1560px] mx-auto px-4 sm:px-8 lg:px-12">
         <div
           className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 pb-10 border-b ${
             isDark ? 'border-white/10' : 'border-[#2C3528]/15'

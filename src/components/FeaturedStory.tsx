@@ -101,11 +101,11 @@ export const FeaturedStory: React.FC<FeaturedStoryProps> = ({ onOpenBooking }) =
   return (
     <section
       id="featured-story"
-      className={`py-20 sm:py-28 relative transition-colors duration-200 border-t ${
+      className={`w-full max-w-full overflow-hidden py-20 sm:py-28 relative transition-colors duration-200 border-t ${
         isDark ? 'bg-[#0D0F0E] text-[#F7F7F2] border-white/5' : 'bg-[#F4F4EE] text-[#1E2520] border-[#2C3528]/10'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-[1560px] mx-auto px-4 sm:px-8 lg:px-12">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
           <div
@@ -238,11 +238,11 @@ export const FeaturedStory: React.FC<FeaturedStoryProps> = ({ onOpenBooking }) =
           role="dialog"
           aria-modal="true"
           aria-label="Featured Wedding Film Player"
-          className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-2 sm:p-6"
+          className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-2 sm:p-6 overflow-y-auto"
           onClick={() => setModalOpen(false)}
         >
           <div
-            className="relative w-full max-w-5xl bg-[#121513] border border-white/20 rounded-2xl overflow-hidden shadow-2xl flex flex-col"
+            className="relative w-full max-w-5xl bg-[#121513] border border-white/20 rounded-2xl overflow-hidden shadow-2xl flex flex-col my-auto max-h-[94vh]"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Top Bar */}
