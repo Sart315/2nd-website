@@ -8,7 +8,7 @@ export const FloatingWhatsApp: React.FC = () => {
   const { isDark } = useTheme();
 
   return (
-    <div className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-40 flex items-center gap-2.5">
+    <div className="global-floating-whatsapp fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-40 flex items-center gap-2.5">
       {/* Tooltip on desktop */}
       {showTooltip && (
         <div

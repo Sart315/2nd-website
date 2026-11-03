@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { X, ChevronLeft, ChevronRight, MapPin, Calendar, Camera, ArrowRight } from 'lucide-react';
 import { PortfolioItem } from '../data/studioData';
 import { handleImageFallback } from '../utils/assetImages';
@@ -32,21 +33,23 @@ export const LightboxModal: React.FC<LightboxModalProps> = ({
 
     window.addEventListener('keydown', handleKeyDown);
     document.body.style.overflow = 'hidden';
+    document.body.setAttribute('data-media-modal-open', 'true');
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = '';
+      document.body.removeAttribute('data-media-modal-open');
     };
   }, [item, onClose, onNext, onPrev]);
 
-  if (!item) return null;
+  if (!item || typeof document === 'undefined') return null;
 
-  return (
+  return createPortal(
     <div
       role="dialog"
       aria-modal="true"
       aria-label={item.title}
-      className="fixed inset-0 z-50 bg-black/92 flex items-center justify-center p-3 sm:p-6 overflow-y-auto"
+      className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-3 sm:p-6 overflow-y-auto"
       onClick={onClose}
     >
       <div
@@ -179,6 +182,8 @@ export const LightboxModal: React.FC<LightboxModalProps> = ({
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
+

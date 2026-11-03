@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Play, Pause, X, Calendar, Film, Volume2, VolumeX, Maximize2, ExternalLink, Sparkles } from 'lucide-react';
 import { STUDIO_INFO } from '../data/studioData';
 import { getImageUrl, handleImageFallback } from '../utils/assetImages';
@@ -98,6 +99,26 @@ export const FeaturedStory: React.FC<FeaturedStoryProps> = ({ onOpenBooking }) =
     setModalOpen(true);
     setIsPlaying(true);
   };
+
+  useEffect(() => {
+    if (!modalOpen) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setModalOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    document.body.style.overflow = 'hidden';
+    document.body.setAttribute('data-media-modal-open', 'true');
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+      document.body.removeAttribute('data-media-modal-open');
+    };
+  }, [modalOpen]);
 
   return (
     <section
@@ -232,14 +253,16 @@ export const FeaturedStory: React.FC<FeaturedStoryProps> = ({ onOpenBooking }) =
       </div>
 
       {/* Cinematic High-Definition Theater Video Modal */}
-      {modalOpen && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-label="Featured Wedding Film Player"
-          className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-2 sm:p-6 overflow-y-auto"
-          onClick={() => setModalOpen(false)}
-        >
+      {modalOpen &&
+        typeof document !== 'undefined' &&
+        createPortal(
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Featured Wedding Film Player"
+            className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-2 sm:p-6 overflow-y-auto"
+            onClick={() => setModalOpen(false)}
+          >
           <div
             className="relative w-full max-w-5xl bg-[#121513] border border-white/20 rounded-2xl overflow-hidden shadow-2xl flex flex-col my-auto max-h-[94vh]"
             onClick={(e) => e.stopPropagation()}
@@ -386,7 +409,8 @@ export const FeaturedStory: React.FC<FeaturedStoryProps> = ({ onOpenBooking }) =
               </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </section>
   );

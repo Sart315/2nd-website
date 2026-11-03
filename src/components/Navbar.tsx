@@ -67,7 +67,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 w-full z-40 transition-colors duration-200 overflow-x-hidden ${
+        className={`global-top-navbar fixed top-0 left-0 right-0 w-full z-40 transition-colors duration-200 overflow-x-hidden ${
           isScrolled
             ? isDark
               ? 'bg-[#0D0F0E]/95 border-b border-white/10 py-3 sm:py-3.5 shadow-lg backdrop-blur-md'
@@ -195,7 +195,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
           role="dialog"
           aria-modal="true"
           aria-label="Navigation Menu"
-          className="md:hidden fixed inset-0 z-50 flex flex-col bg-black/60 transition-opacity"
+          className="global-top-navbar md:hidden fixed inset-0 z-50 flex flex-col bg-black/60 transition-opacity"
           onClick={() => setMobileMenuOpen(false)}
         >
           <div

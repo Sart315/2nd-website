@@ -24,7 +24,7 @@ export default function App() {
       <Navbar onOpenBooking={() => navigateTo('booking')} />
 
       {/* 02. Route View Dispatcher for all 5 Dedicated Pages */}
-      <div className="w-full grow relative z-10 overflow-x-hidden">
+      <div className="w-full grow relative overflow-x-hidden">
         {route === 'home' && <HomePage />}
         {route === 'gallery' && <GalleryPage />}
         {route === 'services' && <ServicesPage />}

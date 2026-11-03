@@ -209,3 +209,12 @@
   animation: luxury-shimmer 1.8s ease-in-out infinite;
 }
 
+/* Hide Top Studio Header / Pop-up View & Floating Actions While Viewing Photos or Videos */
+body[data-media-modal-open="true"] .global-top-navbar,
+body[data-media-modal-open="true"] .global-floating-whatsapp {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+

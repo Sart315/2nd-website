@@ -22,7 +22,7 @@ export const HomePage: React.FC = () => {
   };
 
   return (
-    <main className="relative z-10 w-full max-w-full overflow-x-hidden">
+    <main className="relative w-full max-w-full overflow-x-hidden">
       {/* 01. Full-Screen Cinematic Hero */}
       <Hero
         onOpenBooking={() => handleBooking()}
