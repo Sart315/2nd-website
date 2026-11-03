@@ -1,7 +1,9 @@
 import React from 'react';
-import { ArrowUpRight, Sparkles } from 'lucide-react';
+import { ArrowUpRight, Sparkles, ArrowRight } from 'lucide-react';
 import { getImageUrl, handleImageFallback } from '../utils/assetImages';
 import { useTheme } from '../context/ThemeContext';
+import { useAppRouter } from '../context/RouterContext';
+import { ProgressiveImage } from './ProgressiveImage';
 
 interface ServicesSectionProps {
   onSelectService: (serviceName: string) => void;
@@ -9,6 +11,7 @@ interface ServicesSectionProps {
 
 export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectService }) => {
   const { isDark } = useTheme();
+  const { navigateTo } = useAppRouter();
 
   const curatedServices = [
     {
@@ -94,17 +97,16 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                   : 'bg-white border-[#2C3528]/15 hover:border-[#B08D57]/70 shadow-md'
               }`}
             >
-              {/* Large Visual Image Banner */}
+              {/* Large Visual Image Banner with Progressive Shimmer Skeleton */}
               <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/40">
-                <img
+                <ProgressiveImage
                   src={service.image}
                   alt={service.name}
-                  onError={handleImageFallback}
-                  loading="lazy"
-                  decoding="async"
+                  aspectRatio="16/9"
+                  containerClassName="w-full h-full"
                   className="w-full h-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-103"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/25" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/25 pointer-events-none" />
 
                 {/* Top Number & Tag */}
                 <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
@@ -164,6 +166,21 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Dedicated Services Page Navigation CTA */}
+        <div className="mt-12 sm:mt-16 text-center">
+          <button
+            onClick={() => navigateTo('services')}
+            className={`inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-xs font-bold uppercase tracking-widest border transition-all cursor-pointer ${
+              isDark
+                ? 'border-white/20 hover:border-[#C5A880] text-[#F7F7F2] bg-[#161917]/80 hover:bg-[#1E221F]'
+                : 'border-[#2C3528]/20 hover:border-[#B08D57] text-[#1E2520] bg-white hover:bg-[#F2F2EC] shadow-xs'
+            }`}
+          >
+            <span>View All 9 Disciplines & Complete Deliverables</span>
+            <ArrowRight className="w-4 h-4 text-[#C5A880]" />
+          </button>
         </div>
       </div>
     </section>

@@ -1,11 +1,14 @@
 import React from 'react';
-import { Camera, MapPin, Award, ShieldCheck, HeartHandshake } from 'lucide-react';
+import { Camera, MapPin, Award, ShieldCheck, HeartHandshake, ArrowRight } from 'lucide-react';
 import { STUDIO_INFO } from '../data/studioData';
 import { getImageUrl, handleImageFallback } from '../utils/assetImages';
 import { useTheme } from '../context/ThemeContext';
+import { useAppRouter } from '../context/RouterContext';
+import { ProgressiveImage } from './ProgressiveImage';
 
 export const AboutSection: React.FC = () => {
   const { isDark } = useTheme();
+  const { navigateTo } = useAppRouter();
   const equipmentTableImage = getImageUrl('wedding_equipment_table_flashes_1792253412864.jpg');
 
   return (
@@ -24,15 +27,14 @@ export const AboutSection: React.FC = () => {
                 isDark ? 'bg-[#161917] border-white/10' : 'bg-white border-[#2C3528]/15'
               }`}
             >
-              <img
+              <ProgressiveImage
                 src={equipmentTableImage}
                 alt="Table full of wedding shoot equipment with two flash lights placed behind - Chandralok Studio"
-                onError={handleImageFallback}
-                loading="lazy"
-                decoding="async"
+                aspectRatio="4/3"
+                containerClassName="w-full h-full"
                 className="w-full h-full object-cover object-center"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none" />
 
               {/* Inset Badge */}
               <div className="absolute bottom-5 left-5 right-5 p-3.5 sm:p-4 rounded-xl bg-black/80 border border-white/15 text-white">
@@ -132,6 +134,21 @@ export const AboutSection: React.FC = () => {
                   Archival photo albums & bespoke color grading
                 </span>
               </div>
+            </div>
+
+            {/* Dedicated About Page Navigation Button */}
+            <div className="mt-6">
+              <button
+                onClick={() => navigateTo('about')}
+                className={`inline-flex items-center gap-2 px-7 py-3 rounded-full text-xs font-bold uppercase tracking-wider border transition-all cursor-pointer ${
+                  isDark
+                    ? 'border-white/20 hover:border-[#C5A880] text-[#F7F7F2] bg-[#161917]/80 hover:bg-[#1E221F]'
+                    : 'border-[#2C3528]/20 hover:border-[#B08D57] text-[#1E2520] bg-white hover:bg-[#F2F2EC] shadow-xs'
+                }`}
+              >
+                <span>Discover Our 1981 Heritage & Equipment Fleet</span>
+                <ArrowRight className="w-3.5 h-3.5 text-[#C5A880]" />
+              </button>
             </div>
           </div>
         </div>

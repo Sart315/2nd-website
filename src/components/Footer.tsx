@@ -3,9 +3,23 @@ import { Instagram, Youtube, Phone, MessageSquare, MapPin } from 'lucide-react';
 import { STUDIO_INFO } from '../data/studioData';
 import { ChandralokLogo } from './ChandralokLogo';
 import { useTheme } from '../context/ThemeContext';
+import { useAppRouter } from '../context/RouterContext';
 
 export const Footer: React.FC = () => {
   const { isDark } = useTheme();
+  const { navigateTo } = useAppRouter();
+
+  const handleLink = (target: string, isRoute: boolean) => {
+    if (isRoute) {
+      navigateTo(target as any);
+    } else {
+      navigateTo('home');
+      setTimeout(() => {
+        const el = document.querySelector(target);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 150);
+    }
+  };
 
   return (
     <footer
@@ -90,68 +104,58 @@ export const Footer: React.FC = () => {
                 isDark ? 'text-white' : 'text-[#1E2520]'
               }`}
             >
-              Navigation
+              Pages & Navigation
             </div>
             <ul className="space-y-2 text-xs font-body">
               <li>
-                <a
-                  href="#hero"
-                  className={`transition-colors ${
+                <button
+                  onClick={() => handleLink('home', true)}
+                  className={`transition-colors cursor-pointer text-left ${
                     isDark ? 'hover:text-[#C5A880]' : 'hover:text-[#B08D57]'
                   }`}
                 >
                   Home
-                </a>
+                </button>
               </li>
               <li>
-                <a
-                  href="#portfolio"
-                  className={`transition-colors ${
+                <button
+                  onClick={() => handleLink('gallery', true)}
+                  className={`transition-colors cursor-pointer text-left ${
                     isDark ? 'hover:text-[#C5A880]' : 'hover:text-[#B08D57]'
                   }`}
                 >
-                  Selected Work
-                </a>
+                  Full Gallery Archive
+                </button>
               </li>
               <li>
-                <a
-                  href="#featured-story"
-                  className={`transition-colors ${
+                <button
+                  onClick={() => handleLink('booking', true)}
+                  className={`transition-colors cursor-pointer text-left ${
                     isDark ? 'hover:text-[#C5A880]' : 'hover:text-[#B08D57]'
                   }`}
                 >
-                  Featured Stories
-                </a>
+                  Book A Session / Date Form
+                </button>
               </li>
               <li>
-                <a
-                  href="#services"
-                  className={`transition-colors ${
+                <button
+                  onClick={() => navigateTo('services')}
+                  className={`transition-colors cursor-pointer text-left ${
                     isDark ? 'hover:text-[#C5A880]' : 'hover:text-[#B08D57]'
                   }`}
                 >
-                  Services
-                </a>
+                  Our 9 Disciplines (Services)
+                </button>
               </li>
               <li>
-                <a
-                  href="#about"
-                  className={`transition-colors ${
+                <button
+                  onClick={() => navigateTo('about')}
+                  className={`transition-colors cursor-pointer text-left ${
                     isDark ? 'hover:text-[#C5A880]' : 'hover:text-[#B08D57]'
                   }`}
                 >
-                  Behind The Lens
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#booking"
-                  className={`transition-colors ${
-                    isDark ? 'hover:text-[#C5A880]' : 'hover:text-[#B08D57]'
-                  }`}
-                >
-                  Check Your Date
-                </a>
+                  About Studio & Gear (Heritage)
+                </button>
               </li>
             </ul>
           </div>

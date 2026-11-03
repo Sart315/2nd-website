@@ -178,3 +178,34 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* Progressive Loading: Aperture Pulse & Luxury Champagne Shimmer */
+@keyframes aperture-pulse {
+  0%, 100% {
+    transform: scale(0.94) rotate(0deg);
+    opacity: 0.35;
+  }
+  50% {
+    transform: scale(1.06) rotate(18deg);
+    opacity: 0.85;
+  }
+}
+
+@keyframes luxury-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-aperture-pulse {
+  animation: aperture-pulse 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  transform-origin: center;
+}
+
+.animate-luxury-shimmer {
+  animation: luxury-shimmer 1.8s ease-in-out infinite;
+}
+

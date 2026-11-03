@@ -3,6 +3,7 @@ import { Play, Pause, X, Calendar, Film, Volume2, VolumeX, Maximize2, ExternalLi
 import { STUDIO_INFO } from '../data/studioData';
 import { getImageUrl, handleImageFallback } from '../utils/assetImages';
 import { useTheme } from '../context/ThemeContext';
+import { ProgressiveImage } from './ProgressiveImage';
 
 interface FeaturedStoryProps {
   onOpenBooking: () => void;
@@ -137,18 +138,16 @@ export const FeaturedStory: React.FC<FeaturedStoryProps> = ({ onOpenBooking }) =
             isDark ? 'border-white/10 bg-[#161917]' : 'border-[#2C3528]/15 bg-[#E8E8E2]'
           }`}
         >
-          {/* High-Res Background Image */}
-          <img
+          {/* Progressive High-Res Background Image */}
+          <ProgressiveImage
             src={featuredImage}
             alt="The Sacred Varmala Ceremony - Chandralok Studio Wedding Film"
-            onError={handleImageFallback}
-            loading="lazy"
-            decoding="async"
+            containerClassName="w-full h-full absolute inset-0"
             className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-102"
           />
 
           {/* Cinematic Vignette Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/30 pointer-events-none" />
 
           {/* Center Play Button Overlay */}
           <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center z-10">

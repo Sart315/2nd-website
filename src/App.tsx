@@ -1,76 +1,41 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Navbar } from './components/Navbar';
-import { Hero } from './components/Hero';
-import { FeaturedStory } from './components/FeaturedStory';
-import { PortfolioSection } from './components/PortfolioSection';
-import { ServicesSection } from './components/ServicesSection';
-import { AboutSection } from './components/AboutSection';
-import { TestimonialsSection } from './components/TestimonialsSection';
-import { BookingSection } from './components/BookingSection';
 import { Footer } from './components/Footer';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { useTheme } from './context/ThemeContext';
+import { useAppRouter } from './context/RouterContext';
+import { HomePage } from './pages/HomePage';
+import { GalleryPage } from './pages/GalleryPage';
+import { ServicesPage } from './pages/ServicesPage';
+import { AboutPage } from './pages/AboutPage';
+import { BookingPage } from './pages/BookingPage';
 
 export default function App() {
-  const [selectedServiceForBooking, setSelectedServiceForBooking] = useState<string | undefined>(undefined);
   const { isDark } = useTheme();
-
-  const scrollToBooking = (serviceName?: string) => {
-    if (serviceName) {
-      setSelectedServiceForBooking(serviceName);
-    }
-    const bookingEl = document.getElementById('booking');
-    if (bookingEl) {
-      bookingEl.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const scrollToPortfolio = () => {
-    const portfolioEl = document.getElementById('portfolio');
-    if (portfolioEl) {
-      portfolioEl.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const { route, navigateTo } = useAppRouter();
 
   return (
     <div
       className={`min-h-screen w-full max-w-full overflow-x-hidden cinema-canvas ${
         isDark ? 'bg-[#0D0F0E] text-[#F7F7F2]' : 'bg-[#F9F9F6] text-[#1E2520]'
-      } relative selection:bg-[#C5A880]/30 selection:text-[#F7F7F2] transition-colors duration-200`}
+      } relative selection:bg-[#C5A880]/30 selection:text-[#F7F7F2] transition-colors duration-200 flex flex-col justify-between`}
     >
-      {/* 01. Minimal Top Navigation with CHECK YOUR DATE button & Dark/Light mode switch */}
-      <Navbar onOpenBooking={() => scrollToBooking()} />
+      {/* 01. Minimal Top Navigation with active route indicators & Theme Switch */}
+      <Navbar onOpenBooking={() => navigateTo('booking')} />
 
-      <main className="relative z-10 w-full max-w-full overflow-x-hidden">
-        {/* 01. Full-Screen Cinematic Hero */}
-        <Hero
-          onOpenBooking={() => scrollToBooking()}
-          onExploreWork={scrollToPortfolio}
-        />
+      {/* 02. Route View Dispatcher for all 5 Dedicated Pages */}
+      <div className="w-full grow relative z-10 overflow-x-hidden">
+        {route === 'home' && <HomePage />}
+        {route === 'gallery' && <GalleryPage />}
+        {route === 'services' && <ServicesPage />}
+        {route === 'about' && <AboutPage />}
+        {route === 'booking' && <BookingPage />}
+      </div>
 
-        {/* 02. The Stories We Tell — Centerpiece Wedding Film Showcase */}
-        <FeaturedStory onOpenBooking={() => scrollToBooking()} />
-
-        {/* 03. Selected Work — Asymmetrical Editorial Masonry Portfolio + Lightbox */}
-        <PortfolioSection onReserve={(title) => scrollToBooking(title)} />
-
-        {/* 04. Curated Disciplines — 4 Large Visual Service Blocks */}
-        <ServicesSection onSelectService={(service) => scrollToBooking(service)} />
-
-        {/* 05. Behind The Lens — 1981 Sirsaganj Heritage & Authentic Trust */}
-        <AboutSection />
-
-        {/* 06. Words From Our Couples — 3 Genuine Verified Reviews */}
-        <TestimonialsSection />
-
-        {/* 07. Planning Your Special Day? — High-Conversion Date Check & WhatsApp */}
-        <BookingSection initialService={selectedServiceForBooking} />
-      </main>
-
-      {/* 08. Compact Editorial Footer */}
+      {/* 03. Compact Editorial Footer */}
       <Footer />
 
-      {/* Floating WhatsApp Action Button */}
+      {/* 04. Floating WhatsApp Action Button */}
       <FloatingWhatsApp />
     </div>
   );

@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Calendar, ArrowRight, MessageCircle, Sun, Moon } from 'lucide-react';
+import { Menu, X, Calendar, ArrowRight, MessageCircle, Sun, Moon, Images } from 'lucide-react';
 import { STUDIO_INFO } from '../data/studioData';
 import { ChandralokLogo } from './ChandralokLogo';
 import { useTheme } from '../context/ThemeContext';
+import { useAppRouter, AppRoute } from '../context/RouterContext';
 
 interface NavbarProps {
-  onOpenBooking: () => void;
+  onOpenBooking?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { isDark, toggleTheme } = useTheme();
+  const { route, navigateTo } = useAppRouter();
 
   useEffect(() => {
     let ticking = false;
@@ -40,20 +42,25 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
     };
   }, [mobileMenuOpen]);
 
-  const navLinks = [
-    { name: 'HOME', href: '#hero' },
-    { name: 'WORK', href: '#portfolio' },
-    { name: 'STORIES', href: '#featured-story' },
-    { name: 'SERVICES', href: '#services' },
-    { name: 'ABOUT', href: '#about' },
-    { name: 'CONTACT', href: '#booking' },
+  const navItems: { label: string; target: AppRoute }[] = [
+    { label: 'HOME', target: 'home' },
+    { label: 'GALLERY', target: 'gallery' },
+    { label: 'SERVICES', target: 'services' },
+    { label: 'ABOUT', target: 'about' },
+    { label: 'BOOKING', target: 'booking' },
   ];
 
-  const handleNavClick = (href: string) => {
+  const handleNavClick = (target: AppRoute) => {
     setMobileMenuOpen(false);
-    const el = document.querySelector(href);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+    navigateTo(target);
+  };
+
+  const handleBookingClick = () => {
+    setMobileMenuOpen(false);
+    if (onOpenBooking) {
+      onOpenBooking();
+    } else {
+      navigateTo('booking');
     }
   };
 
@@ -63,8 +70,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
         className={`fixed top-0 left-0 right-0 w-full z-40 transition-colors duration-200 overflow-x-hidden ${
           isScrolled
             ? isDark
-              ? 'bg-[#0D0F0E]/95 border-b border-white/10 py-3 sm:py-3.5 shadow-lg'
-              : 'bg-[#F9F9F6]/95 border-b border-[#2C3528]/15 py-3 sm:py-3.5 shadow-md text-[#1E2520]'
+              ? 'bg-[#0D0F0E]/95 border-b border-white/10 py-3 sm:py-3.5 shadow-lg backdrop-blur-md'
+              : 'bg-[#F9F9F6]/95 border-b border-[#2C3528]/15 py-3 sm:py-3.5 shadow-md text-[#1E2520] backdrop-blur-md'
             : isDark
             ? 'bg-gradient-to-b from-black/85 via-black/45 to-transparent py-4 sm:py-5 border-b border-white/5'
             : 'bg-gradient-to-b from-[#F9F9F6]/90 via-[#F9F9F6]/50 to-transparent py-4 sm:py-5 border-b border-[#2C3528]/10 text-[#1E2520]'
@@ -72,17 +79,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
       >
         <div className="w-full max-w-[1560px] mx-auto px-3.5 sm:px-6 lg:px-12 flex items-center justify-between gap-1.5 sm:gap-3">
           {/* Brand Wordmark & Official Logo */}
-          <a
-            href="#hero"
-            onClick={(e) => {
-              e.preventDefault();
-              handleNavClick('#hero');
-            }}
-            className="flex items-center shrink min-w-0 max-w-[42vw] xs:max-w-[48vw] sm:max-w-none group cursor-pointer"
+          <button
+            onClick={() => handleNavClick('home')}
+            className="flex items-center shrink min-w-0 max-w-[42vw] xs:max-w-[48vw] sm:max-w-none group cursor-pointer text-left bg-transparent border-0 p-0"
             aria-label="Chandralok Studio Home"
           >
             <ChandralokLogo size="md" showHindi={true} showSubtitle={true} />
-          </a>
+          </button>
 
           {/* Minimal Editorial Navigation Links (Desktop) */}
           <nav
@@ -90,26 +93,38 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
               isDark ? 'text-[#F7F7F2]/80' : 'text-[#1E2520]/80'
             }`}
           >
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNavClick(link.href);
-                }}
-                className={`transition-colors py-1 relative group cursor-pointer ${
-                  isDark ? 'hover:text-[#C5A880]' : 'hover:text-[#B08D57]'
-                }`}
-              >
-                <span>{link.name}</span>
-                <span
-                  className={`absolute bottom-0 left-0 w-0 h-px transition-all duration-200 group-hover:w-full ${
-                    isDark ? 'bg-[#C5A880]' : 'bg-[#B08D57]'
+            {navItems.map((item) => {
+              const isActive = route === item.target;
+
+              return (
+                <button
+                  key={item.label}
+                  onClick={() => handleNavClick(item.target)}
+                  className={`transition-colors py-1 relative group cursor-pointer text-[11px] font-bold tracking-[0.2em] uppercase bg-transparent border-0 ${
+                    isActive
+                      ? isDark
+                        ? 'text-[#C5A880]'
+                        : 'text-[#B08D57]'
+                      : isDark
+                      ? 'hover:text-[#C5A880] text-[#F7F7F2]/80'
+                      : 'hover:text-[#B08D57] text-[#1E2520]/80'
                   }`}
-                />
-              </a>
-            ))}
+                >
+                  <span>{item.label}</span>
+                  <span
+                    className={`absolute bottom-0 left-0 h-0.5 transition-all duration-200 ${
+                      isActive
+                        ? isDark
+                          ? 'w-full bg-[#C5A880]'
+                          : 'w-full bg-[#B08D57]'
+                        : isDark
+                        ? 'w-0 group-hover:w-full bg-[#C5A880]'
+                        : 'w-0 group-hover:w-full bg-[#B08D57]'
+                    }`}
+                  />
+                </button>
+              );
+            })}
           </nav>
 
           {/* Action Controls: Dark/Light Mode + CHECK YOUR DATE + Mobile 3-Lines */}
@@ -140,7 +155,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
 
             {/* Check Your Date Button */}
             <button
-              onClick={onOpenBooking}
+              onClick={handleBookingClick}
               className={`px-2.5 py-1.5 sm:px-5 sm:py-2.5 text-[10px] sm:text-xs font-bold tracking-[0.16em] uppercase active:scale-95 transition-all shadow-xs rounded-full flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
                 isDark
                   ? 'text-[#0D0F0E] bg-[#C5A880] hover:bg-[#B3956D]'
@@ -152,7 +167,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
               <span className="xs:hidden">Book</span>
             </button>
 
-            {/* 3 Lines Hamburger Menu Button (Engineered for Flawless Responsiveness) */}
+            {/* 3 Lines Hamburger Menu Button */}
             <button
               type="button"
               onClick={() => setMobileMenuOpen((prev) => !prev)}
@@ -256,33 +271,38 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
 
             {/* Navigation links */}
             <nav className="flex flex-col gap-2 pt-1">
-              {navLinks.map((link) => (
-                <button
-                  key={link.name}
-                  type="button"
-                  onClick={() => handleNavClick(link.href)}
-                  className={`py-3 px-4 text-left text-xs tracking-[0.2em] font-bold uppercase rounded-xl transition-colors flex items-center justify-between cursor-pointer border ${
-                    isDark
-                      ? 'text-[#F7F7F2] hover:text-[#C5A880] bg-[#161917] hover:bg-[#1E221F] border-white/5'
-                      : 'text-[#1E2520] hover:text-[#B08D57] bg-[#FFFFFF] hover:bg-[#F2F2EC] border-[#2C3528]/10 shadow-xs'
-                  }`}
-                >
-                  <span>{link.name}</span>
-                  <ArrowRight
-                    className={`w-3.5 h-3.5 ${isDark ? 'text-[#C5A880]' : 'text-[#B08D57]'}`}
-                  />
-                </button>
-              ))}
+              {navItems.map((item) => {
+                const isActive = route === item.target;
+
+                return (
+                  <button
+                    key={item.label}
+                    type="button"
+                    onClick={() => handleNavClick(item.target)}
+                    className={`py-3 px-4 text-left text-xs tracking-[0.2em] font-bold uppercase rounded-xl transition-colors flex items-center justify-between cursor-pointer border ${
+                      isActive
+                        ? isDark
+                          ? 'text-[#C5A880] bg-[#1F2420] border-[#C5A880]/30'
+                          : 'text-[#B08D57] bg-[#F2F2EC] border-[#B08D57]/30'
+                        : isDark
+                        ? 'text-[#F7F7F2] hover:text-[#C5A880] bg-[#161917] hover:bg-[#1E221F] border-white/5'
+                        : 'text-[#1E2520] hover:text-[#B08D57] bg-[#FFFFFF] hover:bg-[#F2F2EC] border-[#2C3528]/10 shadow-xs'
+                    }`}
+                  >
+                    <span>{item.label}</span>
+                    <ArrowRight
+                      className={`w-3.5 h-3.5 ${isDark ? 'text-[#C5A880]' : 'text-[#B08D57]'}`}
+                    />
+                  </button>
+                );
+              })}
             </nav>
 
             {/* Bottom Actions inside Pop-up View */}
             <div className="pt-2 flex flex-col gap-2.5">
               <button
                 type="button"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenBooking();
-                }}
+                onClick={handleBookingClick}
                 className={`w-full py-3.5 text-xs tracking-[0.2em] uppercase font-bold rounded-full transition-colors cursor-pointer flex items-center justify-center gap-2 shadow-md ${
                   isDark
                     ? 'text-[#0D0F0E] bg-[#C5A880] hover:bg-[#B3956D]'
@@ -290,7 +310,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
                 }`}
               >
                 <Calendar className="w-4 h-4" />
-                <span>Check Your Date</span>
+                <span>Check Your Date (Booking Page)</span>
               </button>
 
               <a

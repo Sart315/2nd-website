@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { ArrowUpRight, Camera, Filter } from 'lucide-react';
+import { ArrowUpRight, Camera, Filter, ArrowRight, Sparkles } from 'lucide-react';
 import { PORTFOLIO_STORIES, PortfolioItem } from '../data/studioData';
 import { handleImageFallback, getImageUrl } from '../utils/assetImages';
 import { LightboxModal } from './LightboxModal';
+import { ProgressiveImage } from './ProgressiveImage';
 import { useTheme } from '../context/ThemeContext';
+import { useAppRouter } from '../context/RouterContext';
 
 interface PortfolioSectionProps {
   onReserve: (title: string) => void;
@@ -13,6 +15,7 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({ onReserve })
   const [activeCategory, setActiveCategory] = useState<string>('ALL');
   const [selectedItem, setSelectedItem] = useState<PortfolioItem | null>(null);
   const { isDark } = useTheme();
+  const { navigateTo } = useAppRouter();
 
   // Normalizing portfolio items with correct resilient image URLs
   const portfolioItems: PortfolioItem[] = [
@@ -199,18 +202,16 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({ onReserve })
                 }`}
               >
                 <div className={`relative w-full ${aspectClass} overflow-hidden`}>
-                  {/* Image */}
-                  <img
+                  {/* Progressive Image with Dark Aperture Shimmer Skeleton */}
+                  <ProgressiveImage
                     src={item.image}
                     alt={item.title}
-                    onError={handleImageFallback}
-                    loading="lazy"
-                    decoding="async"
-                    className="portfolio-img w-full h-full object-cover object-center transition-transform duration-500 ease-out"
+                    containerClassName="w-full h-full"
+                    className="portfolio-img w-full h-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
                   />
 
                   {/* Base subtle dark bottom vignette */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent opacity-85 group-hover:opacity-30 transition-opacity duration-200" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent opacity-85 group-hover:opacity-30 transition-opacity duration-200 pointer-events-none" />
 
                   {/* Dark Translucent Hover Overlay Layer */}
                   <div className="portfolio-overlay absolute inset-0 bg-black/80 opacity-0 flex flex-col justify-between p-6 sm:p-8">
@@ -238,7 +239,7 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({ onReserve })
                   </div>
 
                   {/* Static card footer visible when not hovered */}
-                  <div className="absolute bottom-4 left-4 right-4 group-hover:opacity-0 transition-opacity duration-150">
+                  <div className="absolute bottom-4 left-4 right-4 group-hover:opacity-0 transition-opacity duration-150 pointer-events-none">
                     <span className="text-[10px] tracking-widest uppercase font-semibold text-[#C5A880] block mb-0.5">
                       {item.categoryLabel}
                     </span>
@@ -250,6 +251,22 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({ onReserve })
               </div>
             );
           })}
+        </div>
+
+        {/* Dedicated Gallery Page Navigation CTA */}
+        <div className="mt-14 sm:mt-18 text-center">
+          <div className="inline-flex flex-col sm:flex-row items-center gap-4 p-2 sm:p-2.5 rounded-full border border-[#C5A880]/30 bg-[#161917]/80 backdrop-blur-md">
+            <span className="text-xs font-mono uppercase tracking-[0.2em] text-[#A3ABA1] px-4">
+              Explore Our Full Archive
+            </span>
+            <button
+              onClick={() => navigateTo('gallery')}
+              className="w-full sm:w-auto px-7 py-3 rounded-full bg-[#C5A880] hover:bg-[#B3956D] text-black text-xs font-bold uppercase tracking-widest transition-all cursor-pointer shadow-md shadow-[#C5A880]/20 flex items-center justify-center gap-2"
+            >
+              <span>View Full Gallery Page</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
         </div>
       </div>
 
